@@ -5,43 +5,75 @@ import MyStatusBar from '../../components/Statusbar';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { color } from '../../utils/color';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { LoginDetails } from './loginDetails';
+import { OtpDetails } from './Otp'
 const Login = (props) => {
 
-    const [myNumber, Setmynumber] = useState('');
+    const [phonenumber, setPhonenumber] = useState('');
+    const [page, setPage] = useState(0);
+
+    const OtpREF = useRef();
+
+    const OnVerifyNumberPress = () => {
+        if(page == 0){
+            setPage(1);
+        }
+        else{
+            props.navigation.navigate("Home")
+        }
+
+    }
+
+    const OnResendPress = () => {
+        if(page == 1){
+            setPage(2)
+        }
+    }
     return (
         <View style={styles.container}>
             <KeyboardAwareScrollView showsVerticalScrollIndicator={false} extraHeight={hp('13%')} enableOnAndroid>
                 <MyStatusBar />
                 <View style={styles.flatlistcontainer}>
+                </View>
+
+                <View style={styles.SecondMainContainer}>
+                    <View style={styles.titleMainContainer}>
+                        <Text style={styles.titleFontStyle}   >
+                            Start huge savings on your medicines
+                        </Text>
+                    </View>
+
+                    {
+                        page == 0 ?
+                            <LoginDetails
+                                phonenumber={phonenumber}
+                                setPhonenumber={setPhonenumber}
+                            />
+                            :
+                            <OtpDetails
+                                OtpREF={OtpREF}
+                            />
+                    }
+
+                    <TouchableOpacity onPress={OnVerifyNumberPress} style={styles.BtnMainContainer}>
+                        <Text style={styles.BtnTextStyle}>
+                            {page == 0 ? "Verify Number" : "Verify OTP"}
+                        </Text>
+                    </TouchableOpacity>
+
+                    {page == 0 ?
+                        null
+                        :
+                        <TouchableOpacity onPress={OnResendPress} style={styles.LastBottomContainer}>
+                            <Text style={[styles.BottomTextFontStyle, { color: color.secondfont }]}>
+                            {page == 1 ? "Resend in " : "Resend OTP"} </Text>
+                            <Text style={[styles.BottomTextFontStyle, { color: color.mainfont }]}>{page == 1 ? " 30 " : null}</Text>
+                        </TouchableOpacity>
+                    }
 
                 </View>
-                <View style={styles.textInputMainContainer}>
-                    <View style={styles.textinput1}>
-                        <Text style={styles.textstyle1}>Start huge savings on </Text>
-                    </View>
-                    <View style={styles.textinput2}>
-                        <Text style={styles.textstyle2}>your medicines </Text>
-                    </View>
-                </View>
-                <View style={styles.inputmain1}>
-                <View style={styles.inputmain}>
-                    <View style={styles.countrycode}>
-                        <Text style={styles.countrycodeText}>+91</Text>
-                    </View>
-                    <TextInput
-                        style={styles.numberInput}
-                        keyboardType='numeric'
-                        placeholder="your Phone Number"
-                        value={myNumber}
-                        onChangeText={Setmynumber}
-                        maxLength={10}
-                    />
-                </View>
-                </View>
-                <View style={styles.BlankView}></View>
-                <TouchableOpacity onPress={() => props.navigation.navigate('otp')}  style={styles.ButtonMain}>
-                    <Text style={styles.buttontext}>verify Number</Text>
-                </TouchableOpacity>
+
+
             </KeyboardAwareScrollView>
         </View>
     )

@@ -5,8 +5,8 @@ export default function MyStatusBar(props) {
 
         return (
             <StatusBar
-                translucent={false}
-                hidden={false}
+                translucent={true}
+                hidden={true}
             />
         );   
 }

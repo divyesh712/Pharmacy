@@ -1,28 +1,40 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { TransitionPresets,createStackNavigator } from '@react-navigation/stack';
+import { TransitionPresets, createStackNavigator } from '@react-navigation/stack';
+import { useFonts } from "expo-font";
 
 import Login from './src/screen/Login/Login';
-import otp from './src/screen/otp/otp';
+import Home from './src/screen/Home/Home';
 const Stack = createStackNavigator();
 
-const AppWithNavContainer = () => { 
+const AppWithNavContainer = () => {
 
-  return(
+  const [fontsLoaded] = useFonts({
+    "Poppins-Regular" : require("./assets/fonts/Poppins-Regular.ttf"),
+    "Poppins-Medium" : require("./assets/fonts/Poppins-Medium.ttf"),
+  })
+  return (
     <NavigationContainer >
-    <Stack.Navigator 
-     screenOptions={{
-       headerShown:false,
-     }}
-     presentation={"modal"}
-     initialRouteName="Splash"
-     // initialRouteName="Register_S10"
-     >
-       <Stack.Screen name="Login" component={Login} options={{...TransitionPresets.SlideFromRightIOS}} />
-       <Stack.Screen name="otp" component={otp} options={{...TransitionPresets.SlideFromRightIOS}} />
-    </Stack.Navigator>
+      {
+        fontsLoaded ?
 
-</NavigationContainer> 
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+            presentation={"modal"}
+            initialRouteName="Splash"
+          // initialRouteName="Register_S10"
+          >
+            <Stack.Screen name="Login" component={Login} options={{ ...TransitionPresets.SlideFromRightIOS }} />
+            <Stack.Screen name="Home" component={Home}  />
+          </Stack.Navigator>
+
+          :
+          null
+      }
+
+    </NavigationContainer>
   )
 }
 

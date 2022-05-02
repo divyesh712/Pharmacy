@@ -2,6 +2,8 @@
 import { StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { color } from '../../utils/color';
+import fontSize from '../../utils/fontsize';
+import fontFamily from '../../utils/fontFamily';
 
 export default StyleSheet.create({
     container: {
@@ -13,85 +15,77 @@ export default StyleSheet.create({
         width: wp('100%'),
         backgroundColor: 'red',
     },
-    textInputMainContainer: {
-        height: hp('10%'),
-        width: wp('100%'),
-        // backgroundColor:'green',
-        alignItems: 'center'
+    SecondMainContainer : {
+        height : hp("35%"),
+        width : wp("100%"),
+        backgroundColor : color.bg_main
     },
-    textinput1: {
-        height: hp('5%'),
-        width: wp('85%'),
-        justifyContent: 'flex-end'
-
+    titleMainContainer : {
+        height :hp("10%"),
+        width :wp("86%"),
+        alignSelf :'center',
+        justifyContent :'center',
     },
-    textstyle1: {
-        fontSize: hp('3%'),
-        fontWeight: '900',
-        color: color.black
-
+    titleFontStyle : {
+        fontSize : fontSize.large,
+        color : color.mainfont,
+        fontFamily : fontFamily.BOLD_FONT_FAMILY,
     },
-    textinput2: {
-        height: hp('5%'),
-        width: wp('85%'),
-
+    textInputMainContainer : {
+        height :hp("9%"),
+        width : wp("86%"),
+        alignSelf : 'center',
+        marginTop : hp("1%"),
+        justifyContent : 'flex-end',
     },
-    textstyle2: {
-        fontSize: hp('3%'),
-        fontWeight: '900',
-        color: color.black
+    BtnMainContainer : {
+        height :hp("7%"),
+        width :wp("86%"),
+        backgroundColor : color.mainfont,
+        borderRadius : hp("1%"),
+        justifyContent : 'center',
+        marginTop :hp("3%"),
+        alignSelf : 'center',
+        alignItems :'center'
     },
-    inputmain1: {
-        height: hp('10%'),
-        width: wp('100%'),
-        // backgroundColor:'blue',
-        alignItems: 'center',
-        justifyContent: 'center'
+    BtnTextStyle : {
+        fontSize : fontSize.regular,
+        color : color.bg_main,
+        fontFamily : fontFamily.BOLD_FONT_FAMILY,
     },
-    inputmain: {
-        height: hp('5%'),
-        width: wp('85%'),
-        // backgroundColor:'pink',
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderBottomWidth: wp('0.5%'),
-
+    TextInputContaier : {
+        height :hp("6%"),
+        width : wp("86%"),
+        flexDirection : 'row',
+        alignItems :'center'
     },
-
-    countrycode: {
-        // backgroundColor:'red',
-        height: hp('5%'),
-        width: wp('17%'),
-        justifyContent: 'center',
-        alignItems: "center"
-
-        // flexDirection:'row'
+    TextinputTextContainer : {
+        height :hp("5%"),
+        width :wp("20%"),
+        justifyContent :'center',
+        alignItems :'center'
     },
-    countrycodeText: {
-
+    regularFontStyle : {
+        fontSize : fontSize.regular,
+        color : color.mainfont,
+        fontFamily : fontFamily.REGULAR_FORT_FAMILY,
     },
-    numberInput: {
-        // backgroundColor:'yellow',
-        height: hp('5%'),
-        justifyContent: 'center',
-        fontSize: hp('2.4%')
-
+    TextInputStyle : {
+        height :hp("5%"),
+        width : wp("60%"),
+        justifyContent : 'center',
+        alignItems :'center'
     },
-    BlankView: {
-        height: hp('3%')
+    LastBottomContainer : {
+        height :hp("5%"),
+        width :wp("86%"),
+        justifyContent : 'center',
+        alignItems :'flex-end',
+        alignSelf :'center',
+        flexDirection : 'row'
     },
-    ButtonMain: {
-        height: hp('6%'),
-        width: wp('85%'),
-        backgroundColor: '#000000',
-        alignSelf: 'center',
-        justifyContent: 'center',
-        borderRadius: wp('1%')
-
-    },
-    buttontext: {
-        alignSelf: 'center',
-        fontSize: hp('2.6%'),
-        color: '#fff'
+    BottomTextFontStyle : {
+        fontSize : fontSize.xsmall,
+        fontFamily : fontFamily.REGULAR_FORT_FAMILY
     }
 });
