@@ -15,17 +15,16 @@ const Login = (props) => {
     const OtpREF = useRef();
 
     const OnVerifyNumberPress = () => {
-        if(page == 0){
+        if (page == 0) {
             setPage(1);
         }
-        else{
-            props.navigation.navigate("Home")
+        else {
+            props.navigation.navigate("DrawerScreen")
         }
-
     }
 
     const OnResendPress = () => {
-        if(page == 1){
+        if (page == 1) {
             setPage(2)
         }
     }
@@ -66,7 +65,7 @@ const Login = (props) => {
                         :
                         <TouchableOpacity onPress={OnResendPress} style={styles.LastBottomContainer}>
                             <Text style={[styles.BottomTextFontStyle, { color: color.secondfont }]}>
-                            {page == 1 ? "Resend in " : "Resend OTP"} </Text>
+                                {page == 1 ? "Resend in " : "Resend OTP"} </Text>
                             <Text style={[styles.BottomTextFontStyle, { color: color.mainfont }]}>{page == 1 ? " 30 " : null}</Text>
                         </TouchableOpacity>
                     }

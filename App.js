@@ -5,13 +5,16 @@ import { useFonts } from "expo-font";
 
 import Login from './src/screen/Login/Login';
 import Home from './src/screen/Home/Home';
+import Basket from './src/screen/Basket/Basket';
+import DrawerScreen from './src/navigation/DrawerScreen';
+
 const Stack = createStackNavigator();
 
 const AppWithNavContainer = () => {
 
   const [fontsLoaded] = useFonts({
-    "Poppins-Regular" : require("./assets/fonts/Poppins-Regular.ttf"),
-    "Poppins-Medium" : require("./assets/fonts/Poppins-Medium.ttf"),
+    "Poppins-Regular": require("./assets/fonts/Poppins-Regular.ttf"),
+    "Poppins-Medium": require("./assets/fonts/Poppins-Medium.ttf"),
   })
   return (
     <NavigationContainer >
@@ -23,11 +26,12 @@ const AppWithNavContainer = () => {
               headerShown: false,
             }}
             presentation={"modal"}
-            initialRouteName="Splash"
-          // initialRouteName="Register_S10"
+            initialRouteName="Basket"
           >
             <Stack.Screen name="Login" component={Login} options={{ ...TransitionPresets.SlideFromRightIOS }} />
-            <Stack.Screen name="Home" component={Home}  />
+            {/* <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Basket" component={Basket} /> */}
+            <Stack.Screen name="DrawerScreen" component={DrawerScreen} />
           </Stack.Navigator>
 
           :
