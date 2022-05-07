@@ -10,7 +10,7 @@ export default StyleSheet.create({
         backgroundColor: color.bg_main
     },
     subTitleMainContainer : {
-        height : hp("3%"),
+        height : hp("4%"),
         width : wp("86%"),
         alignSelf : 'center',
         flexDirection : 'row'

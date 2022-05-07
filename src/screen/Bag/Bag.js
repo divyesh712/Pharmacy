@@ -47,13 +47,14 @@ const ProductItems = [
     },
 ]
 
-const Basket = () => {
+const Bag = (props) => {
     return (
         <View style={styles.container}>
             <MyStatusBar />
             <HeaderComponent
                 headerText={"Hey Sherya"}
                 basketItemExist={true}
+                OnDrawerPress = {() => {props.navigation.openDrawer()}}
             />
 
             <TitleTextCompnent
@@ -85,4 +86,4 @@ const Basket = () => {
     )
 }
 
-export default Basket;
+export default Bag;

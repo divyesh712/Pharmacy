@@ -5,10 +5,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { color } from '../utils/color';
 import fontSize from '../utils/fontsize';
 import fontFamily from '../utils/fontFamily';
-
-const DrawerIcon = require("../assets/icon/align-left.png");
-const BagIcon = require("../assets/icon/shopping-bag.png");
-const SearchIcon = require("../assets/icon/search.png");
+import { DrawerIcon , BagIcon , SearchIcon} from '../constants/Imgconstants';
 
 export const HeaderComponent = ({
     headerText,

@@ -6,13 +6,8 @@ import MyStatusBar from '../../components/Statusbar';
 import { HeaderComponent, SearchComponent, CategoriesComponents } from '../../components/sharedComponents';
 import { color } from '../../utils/color';
 import ProductRenderComponent from '../../components/ProductRenderCompopnent';
-
-const Category1 = require("../../assets/image/UploadPrescription.png");
-const Category2 = require("../../assets/image/TalkToPharmasitic.png");
-const Category3 = require("../../assets/image/StoreLocator.png");
-const Category4 = require("../../assets/image/ViewMedications.png");
-const Category5 = require("../../assets/image/AllCategories.png");
-const Category6 = require("../../assets/image/FindGeneric.png");
+import { Category1 , Category2 , Category3 , Category4, Category5 , Category6 } from '../../constants/Imgconstants';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const ProductIrems = [
     {
@@ -64,8 +59,9 @@ const Home = (props) => {
 
     return (
         <View style={styles.container}>
+          
             <MyStatusBar />
-
+            <ScrollView>
             <HeaderComponent
                 headerText={"Hey Sherya"}
                 OnDrawerPress = {OnDrawerPress}
@@ -123,6 +119,7 @@ const Home = (props) => {
             <ProductRenderComponent
                 data={ProductIrems}
             />
+            </ScrollView>
         </View>
     )
 }

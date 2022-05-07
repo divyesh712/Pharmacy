@@ -1,0 +1,12 @@
+export const  RemoveIcon = require('../assets/icon/remove.png');
+export const DrawerIcon = require("../assets/icon/align-left.png");
+export const BagIcon = require("../assets/icon/shopping-bag.png");
+export const SearchIcon = require("../assets/icon/search.png");
+export const Category1 = require("../assets/image/UploadPrescription.png");
+export const Category2 = require("../assets/image/TalkToPharmasitic.png");
+export const Category3 = require("../assets/image/StoreLocator.png");
+export const Category4 = require("../assets/image/ViewMedications.png");
+export const Category5 = require("../assets/image/AllCategories.png");
+export const Category6 = require("../assets/image/FindGeneric.png");
+export const EditIcon = require("../assets/icon/edit.png");
+export const ChevronRight = require("../assets/icon/chevronRight.png");

@@ -5,9 +5,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { color } from '../utils/color';
 import fontSize from '../utils/fontsize';
 import fontFamily from '../utils/fontFamily';
-
-const BagIcon = require("../assets/icon/shopping-bag.png");
-const RemoveIcon = require("../assets/icon/remove.png");
+import { RemoveIcon, BagIcon } from '../constants/Imgconstants';
 
 const ProductRenderComponent = ({
     data,
@@ -95,6 +93,7 @@ const ProductRenderComponent = ({
 
     return (
         <FlatList
+            nestedScrollEnabled={true}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
             data={data}
