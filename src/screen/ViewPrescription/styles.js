@@ -10,19 +10,25 @@ export default StyleSheet.create({
         backgroundColor: color.bg_main
     },
     subTitleMainContainer : {
-        height : hp("3%"),
+        height : hp("4%"),
         width : wp("86%"),
         alignSelf : 'center',
-        flexDirection : 'row'
+        marginTop : hp("2%")
     },
     subtitleFontStyle : {
         fontSize : fontSize.regular,
-        fontFamily : fontFamily.REGULAR_FORT_FAMILY,
+        fontFamily : fontFamily.BOLD_FONT_FAMILY,
         color : color.mainfont
     },
-    subtitlePriceFontStyle : {
-        fontFamily : fontFamily.BOLD_FONT_FAMILY,
-        fontSize : fontSize.regular,
-        color : color.mainfont
+    ImgMainContainer : {
+        height : hp("25%"),
+        width :wp("86%"),
+        alignSelf : 'center',
+        marginTop : hp("3%")
+    },
+    imgContainer : {
+        height : hp("25%"),
+        width : wp("86%"),
+ 
     }
 })

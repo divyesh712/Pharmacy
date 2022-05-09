@@ -5,10 +5,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { color } from '../utils/color';
 import fontSize from '../utils/fontsize';
 import fontFamily from '../utils/fontFamily';
-
-const DrawerIcon = require("../assets/icon/align-left.png");
-const BagIcon = require("../assets/icon/shopping-bag.png");
-const SearchIcon = require("../assets/icon/search.png");
+import { DrawerIcon, BagIcon, SearchIcon, EditIcon } from '../constants/Imgconstants';
 
 export const HeaderComponent = ({
     headerText,
@@ -104,16 +101,76 @@ export const SearchComponent = ({
 
 export const TitleTextCompnent = ({
     title,
-    containerStyle
+    containerStyle,
+    editable,
 }) => {
-    return(
-        <View style={{...styles.TitleTextMainContainer ,...containerStyle }}>
-                <Text style={styles.titleTextFontStyle}>
-                    {title}
-                </Text>
-            </View>
+    return (
+        <View style={{ ...styles.TitleTextMainContainer, ...containerStyle }}>
+            <Text style={styles.titleTextFontStyle}>
+                {title}
+            </Text>
+            {
+                editable ?
+                    <TouchableOpacity>
+                        <Image
+                            source={EditIcon}
+                            style={styles.EditIconStyle}
+                        />
+                    </TouchableOpacity>
+                    :
+                    null
+            }
+
+        </View>
     )
 }
+
+export const OrderProgressReport = ({
+    containerStyle,
+    orderProgressText,
+    orderProgressStep,
+    orderProgressComplete,
+}) => {
+    return (
+        <View style={{ ...styles.OrderReportMainContainer, ...containerStyle }}>
+            <View style={styles.BoxMainContainer}>
+                <View style={[styles.BoxContainer, { borderStyle: orderProgressComplete ? 'solid' : 'dotted', borderRadius: 0.1 }]}>
+                    <Text style={[styles.BoxTextStyle, { color: orderProgressComplete ? color.mainfont : color.secondfont }]}>
+                        {orderProgressStep}
+                    </Text>
+                </View>
+            </View>
+            <View style={styles.OrderReportTextMainContainer}>
+                <Text style={[styles.OrderReportTextStyle, { color: orderProgressComplete ? color.mainfont : color.secondfont }]}>
+                    {orderProgressText}
+                </Text>
+            </View>
+        </View>
+    )
+}
+
+export const AddAddressTextInput = ({
+    onAddressChangeText,
+    AddressValue,
+    placeholderText,
+    containerStyle,
+}) => {
+    return (
+        <View style={{ ...styles.AddAddrssTextInputMainContainer, ...containerStyle }}>
+            <TextInput
+                style={styles.AddAddressInputContainer}
+                placeholder={placeholderText}
+                onChangeText={onAddressChangeText}
+                value={AddressValue}
+                underlineColorAndroid="transparent"
+                placeholderTextColor={color.secondfont}
+            />
+        </View>
+    )
+}
+
+
+
 const styles = StyleSheet.create({
     HeaderMainContainer: {
         height: hp("10%"),
@@ -221,16 +278,73 @@ const styles = StyleSheet.create({
         fontFamily: fontFamily.BOLD_FONT_FAMILY,
         color: color.mainfont
     },
-    TitleTextMainContainer : {
-        height : hp("6%"),
-        width : wp("86%"),
-        alignSelf : 'center',
-        justifyContent : 'center',
-        padding : 0
+    TitleTextMainContainer: {
+        height: hp("6%"),
+        width: wp("86%"),
+        alignSelf: 'center',
+        justifyContent: 'center',
+        padding: 0
     },
-    titleTextFontStyle : {
-        fontFamily : fontFamily.BOLD_FONT_FAMILY,
-        fontSize : fontSize.vlarge,
-        color : color.mainfont
+    titleTextFontStyle: {
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        fontSize: fontSize.vlarge,
+        color: color.mainfont
     },
+    OrderReportMainContainer: {
+        height: hp("9%"),
+        width: wp("86%"),
+        alignSelf: 'center',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    BoxMainContainer: {
+        height: hp("6%"),
+        width: wp("20%"),
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    BoxContainer: {
+        height: hp("4.5%"),
+        width: hp("4.5%"),
+        borderWidth: hp("0.3%"),
+        color: color.mainfont,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
+    BoxTextStyle: {
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        fontSize: fontSize.xsmall,
+    },
+    OrderReportTextMainContainer: {
+        height: hp("6%"),
+        width: wp("60%"),
+        justifyContent: 'center'
+    },
+    OrderReportTextStyle: {
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        fontSize: fontSize.slarge,
+    },
+    AddAddrssTextInputMainContainer: {
+        height: hp("6%"),
+        width: wp("86%"),
+        alignSelf: 'center',
+        borderBottomWidth: hp("0.2%"),
+        borderBottomColor: color.mainfont,
+        justifyContent: 'center'
+    },
+    AddAddressInputContainer: {
+        height: hp("6%"),
+        width: wp("86%"),
+        justifyContent: 'center',
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        fontSize: fontSize.regular,
+        color: color.mainfont,
+        paddingLeft: wp("5%")
+    },
+    EditIconStyle: {
+        height: hp("3%"),
+        width: hp("3%"),
+        marginRight: wp("10%")
+    }
 })
