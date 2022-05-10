@@ -5,14 +5,14 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { color } from '../utils/color';
 import fontSize from '../utils/fontsize';
 import fontFamily from '../utils/fontFamily';
-
-const BagIcon = require("../assets/icon/shopping-bag.png");
-const RemoveIcon = require("../assets/icon/remove.png");
+import { RemoveIcon, BagIcon,ArrowUpIcon } from '../constants/Imgconstants';
 
 const ProductRenderComponent = ({
     data,
     containerStyle,
     comeFromBasket,
+    comeFromOrders,
+    OnArrowPress,
 }) => {
 
     const ProductRenderItem = (item) => {
@@ -56,36 +56,54 @@ const ProductRenderComponent = ({
                         </View>
                     </View>
                 </View>
-                <View style={styles.ProductSecondMainContainer}>
-                    <View style={[styles.ProductBagMainContainer, { alignItems: comeFromBasket ? 'flex-end' : 'center' }]}>
-                        <Image
-                            source={comeFromBasket ? RemoveIcon : BagIcon}
-                            style={styles.ProductBagIconStyle}
-                        />
-                    </View>
-                    <View style={styles.ProductBottomTextContainer}>
-                        <Text style={styles.ProductBottomTextStyle}>
-                            {comeFromBasket ? "Remove" : "Add to Bag"}
-                        </Text>
-                    </View>
-                    <View style={styles.ProductCountMainContainer}>
-                        <View style={styles.CountIconMainContainer}>
-                            <Text style={styles.CountIconStyle}>
-                                -
-                            </Text>
+                {
+                    comeFromOrders ?
+                        <View style={styles.ProductSecondMainContainer}>
+                            <View style={styles.OrdersBottomMainContainer}>
+                                <Text style={styles.orderBottomTextStyle}>
+                                    {item.date}
+                                </Text>
+                            </View>
+                            <TouchableOpacity onPress={() => {OnArrowPress(item)}} style={styles.OrderBottomIConMAinContainer}>
+                                <Image
+                                source={ArrowUpIcon}
+                                style = {styles.ArrowUpStyle}
+                                />
+                            </TouchableOpacity>
                         </View>
-                        <View style={styles.CountTextMainContiner}>
-                            <Text style={styles.CountTextStyle}>
-                                01
-                            </Text>
+                        :
+                        <View style={styles.ProductSecondMainContainer}>
+                            <View style={[styles.ProductBagMainContainer, { alignItems: comeFromBasket ? 'flex-end' : 'center' }]}>
+                                <Image
+                                    source={comeFromBasket ? RemoveIcon : BagIcon}
+                                    style={styles.ProductBagIconStyle}
+                                />
+                            </View>
+                            <View style={styles.ProductBottomTextContainer}>
+                                <Text style={styles.ProductBottomTextStyle}>
+                                    {comeFromBasket ? "Remove" : "Add to Bag"}
+                                </Text>
+                            </View>
+                            <View style={styles.ProductCountMainContainer}>
+                                <View style={styles.CountIconMainContainer}>
+                                    <Text style={styles.CountIconStyle}>
+                                        -
+                                    </Text>
+                                </View>
+                                <View style={styles.CountTextMainContiner}>
+                                    <Text style={styles.CountTextStyle}>
+                                        01
+                                    </Text>
+                                </View>
+                                <View style={styles.CountIconMainContainer}>
+                                    <Text style={styles.CountIconStyle}>
+                                        +
+                                    </Text>
+                                </View>
+                            </View>
                         </View>
-                        <View style={styles.CountIconMainContainer}>
-                            <Text style={styles.CountIconStyle}>
-                                +
-                            </Text>
-                        </View>
-                    </View>
-                </View>
+                }
+
                 <View style={styles.footerMainContainer}>
                     <View style={styles.footerContainer}></View>
                 </View>
@@ -95,6 +113,7 @@ const ProductRenderComponent = ({
 
     return (
         <FlatList
+            nestedScrollEnabled={true}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
             data={data}
@@ -244,6 +263,26 @@ const styles = StyleSheet.create({
         height: hp("0.2%"),
         width: wp("80%"),
         backgroundColor: color.lineColor
+    },
+    OrdersBottomMainContainer: {
+        height: hp("5%"),
+        width: wp("70%"),
+        justifyContent: 'center',
+        paddingLeft: wp("7%"),
+    },
+    orderBottomTextStyle: {
+        fontSize: fontSize.lsmall,
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        color: color.mainfont,
+    },
+    OrderBottomIConMAinContainer: {
+        height: hp("5%"),
+        width: wp("15%"),
+        justifyContent : 'center'
+    },
+    ArrowUpStyle  :{
+        height : hp("3%"),
+        width: hp("3%"),
     }
 })
 

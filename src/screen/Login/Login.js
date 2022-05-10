@@ -7,6 +7,8 @@ import { color } from '../../utils/color';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LoginDetails } from './loginDetails';
 import { OtpDetails } from './Otp'
+import { MainImg } from '../../constants/Imgconstants';
+
 const Login = (props) => {
 
     const [phonenumber, setPhonenumber] = useState('');
@@ -33,6 +35,11 @@ const Login = (props) => {
             <KeyboardAwareScrollView showsVerticalScrollIndicator={false} extraHeight={hp('13%')} enableOnAndroid>
                 <MyStatusBar />
                 <View style={styles.flatlistcontainer}>
+                    <Image 
+                    source={MainImg}
+                resizeMode = "cover"
+                style = {{height : hp("65%"), width : wp("100%")}}
+                    />
                 </View>
 
                 <View style={styles.SecondMainContainer}>
