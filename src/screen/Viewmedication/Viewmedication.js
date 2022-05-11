@@ -8,6 +8,7 @@ import styles from './styles';
 import MedicineRenderComponent from '../../components/MedicineRenderComponent';
 import { CustomBtn } from '../../components/CustomBtn';
 import { color } from '../../utils/color';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const MedicineItem = [
     {
@@ -66,7 +67,13 @@ const Viewmedication = (props) => {
     return (
         <View style={styles.container}>
             <MyStatusBar />
-
+            <KeyboardAwareScrollView
+                style={styles.container}
+                enableOnAndroid={true}
+                extraHeight={hp('15%')}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+            >
             <HeaderComponent
                 headerText={"Hey Sherya"}
                 OnDrawerPress={OnDrawerPress}
@@ -118,7 +125,7 @@ const Viewmedication = (props) => {
             setNumber = {setNumber}
             number = {number}
             />
-
+            </KeyboardAwareScrollView>
         </View>
     )
 }
