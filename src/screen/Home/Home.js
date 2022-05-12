@@ -3,7 +3,7 @@ import { View, Text, Modal, Image, TextInput, FlatList, TouchableOpacity, } from
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from './styles';
 import MyStatusBar from '../../components/Statusbar';
-import { HeaderComponent, SearchComponent, UploadPrecriptionModal,TalkToPharmasiticModal, CategoriesComponents } from '../../components/sharedComponents';
+import { HeaderComponent, SearchComponent, UploadPrecriptionModal, TalkToPharmasiticModal, CategoriesComponents } from '../../components/sharedComponents';
 import { color } from '../../utils/color';
 import ProductRenderComponent from '../../components/ProductRenderCompopnent';
 import { Category1, Category2, Category3, Category4, Category5, Category6 } from '../../constants/Imgconstants';
@@ -53,8 +53,8 @@ const Home = (props) => {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [uploadPresModal, setUploadPresModal] = useState(false);
-    const [ talkPharModal ,setTalkPharModal ] = useState(false);
-    const [ pharmNumber , setPharmNumber ] = useState("+91  ");
+    const [talkPharModal, setTalkPharModal] = useState(false);
+    const [pharmNumber, setPharmNumber] = useState("+91  ");
 
     const OnDrawerPress = () => {
         props.navigation.openDrawer()
@@ -69,12 +69,17 @@ const Home = (props) => {
     }
 
     const OnStorePress = () => {
-        props.navigation.navigate("Stores")
+        props.navigation.navigate("Stores");
     }
 
     const OnAllMedicationPress = () => {
-        props.navigation.navigate("Medications")
+        props.navigation.navigate("Medications");
     }
+
+    const OnAllCategoriesPrerss = () => {
+        props.navigation.navigate("AllCategories");
+    }
+    
     return (
         <View style={styles.container}>
 
@@ -104,13 +109,13 @@ const Home = (props) => {
                     <CategoriesComponents
                         categoryName={"Talk to Pharmasitic"}
                         categoryImg={Category2}
-                        OnCategoryPress = {OnTalkPharmasticPress}
+                        OnCategoryPress={OnTalkPharmasticPress}
                     />
 
                     <CategoriesComponents
                         categoryName={"Store Locator"}
                         categoryImg={Category3}
-                        OnCategoryPress = {OnStorePress}
+                        OnCategoryPress={OnStorePress}
                     />
                 </View>
 
@@ -118,12 +123,13 @@ const Home = (props) => {
                     <CategoriesComponents
                         categoryName={"View all Medications"}
                         categoryImg={Category4}
-                        OnCategoryPress = {OnAllMedicationPress}
+                        OnCategoryPress={OnAllMedicationPress}
                     />
 
                     <CategoriesComponents
                         categoryName={"All Categories"}
                         categoryImg={Category5}
+                        OnCategoryPress={OnAllCategoriesPrerss}
                     />
 
                     <CategoriesComponents
@@ -148,21 +154,21 @@ const Home = (props) => {
                 />
 
                 <TalkToPharmasiticModal
-                setTalkPharModal = {setTalkPharModal}
-                talkPharModal = {talkPharModal}
-                setPharmNumber = {setPharmNumber}
-                pharmNumber = {pharmNumber}
+                    setTalkPharModal={setTalkPharModal}
+                    talkPharModal={talkPharModal}
+                    setPharmNumber={setPharmNumber}
+                    pharmNumber={pharmNumber}
                 />
 
-            <View style={styles.BottomTextContainer}>
-                <Text style={styles.BottomTextStyle}>
-                    Deal Of The Day
-                </Text>
-            </View>
+                <View style={styles.BottomTextContainer}>
+                    <Text style={styles.BottomTextStyle}>
+                        Deal Of The Day
+                    </Text>
+                </View>
 
-            <ProductRenderComponent
-                data={ProductIrems}
-            />
+                <ProductRenderComponent
+                    data={ProductIrems}
+                />
             </ScrollView>
         </View>
     )

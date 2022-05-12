@@ -5,6 +5,7 @@ import Stores from '../screen/Stores/Stores';
 import Medications from '../screen/Medications/Medications';
 import Viewmedication from '../screen/Viewmedication/Viewmedication';
 import Medicine from '../screen/Medicine/Medicine';
+import AllCategories from '../screen/AllCategories/AllCategories';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ const HomeStack = () => {
                 <Stack.Screen name="Medications" component={Medications} />
                 <Stack.Screen name="Viewmedication" component={Viewmedication} />
                 <Stack.Screen name="Medicine" component={Medicine} />
+                <Stack.Screen name="AllCategories" component={AllCategories} />
             </Stack.Navigator>
     )
 }

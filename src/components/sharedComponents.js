@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, Modal, Image, TextInput, TouchableOpacity, } from 'react-native';
+import { View, Text, Modal, Image, FlatList, TextInput, TouchableOpacity, } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { color } from '../utils/color';
@@ -282,7 +282,7 @@ export const MedicationModal = ({
     modalVisible,
     drugName,
     setDrugName,
-    number ,
+    number,
     setNumber,
 }) => {
     return (
@@ -292,52 +292,164 @@ export const MedicationModal = ({
             transparent={true}
             visible={modalVisible}
         >
-           <View style={styles.PresModalMainContainer}>
-               <TouchableOpacity onPress={() => {setModalVisible(false)}} style = {styles.MediFirstContainer}>
+            <View style={styles.PresModalMainContainer}>
+                <TouchableOpacity onPress={() => { setModalVisible(false) }} style={styles.MediFirstContainer}>
 
-               </TouchableOpacity>
-               <View style={styles.MedicationModalMainContainer}>
-                   <View style = {styles.MediTitleMainContainer}>
-                       <Text numberOfLines={1} style = {styles.MediTitleFontStyle}>
-                           Didn't find your medication?
-                       </Text>
-                   </View>
-                   <View style = {styles.MediSubTextContainer}>
-                       <Text style={styles.MediSubTextStyle}>
-                           We're always adding new medications to our pharmacy. Tell us which drugs you're looking for and we'll let you know when they become available.
-                       </Text>
-                   </View>
+                </TouchableOpacity>
+                <View style={styles.MedicationModalMainContainer}>
+                    <View style={styles.MediTitleMainContainer}>
+                        <Text numberOfLines={1} style={styles.MediTitleFontStyle}>
+                            Didn't find your medication?
+                        </Text>
+                    </View>
+                    <View style={styles.MediSubTextContainer}>
+                        <Text style={styles.MediSubTextStyle}>
+                            We're always adding new medications to our pharmacy. Tell us which drugs you're looking for and we'll let you know when they become available.
+                        </Text>
+                    </View>
 
-                   <View style={styles.MediInputMainContainer}>
-                       <TextInput
-                       style = {styles.MediInputContainer}
-                       placeholder={"Drug Name"}
-                       onChangeText={setDrugName}
-                       value={drugName}
-                       underlineColorAndroid="transparent"
-                       placeholderTextColor={color.secondfont}
-                       />
-                   </View>
-                   <View style={styles.MediInputMainContainer}>
-                       <TextInput
-                       style = {styles.MediInputContainer}
-                       placeholder={"Your Number"}
-                       onChangeText={setNumber}
-                       value={number}
-                       underlineColorAndroid="transparent"
-                       placeholderTextColor={color.secondfont}
-                       />
-                   </View>
-                   <CustomBtn
+                    <View style={styles.MediInputMainContainer}>
+                        <TextInput
+                            style={styles.MediInputContainer}
+                            placeholder={"Drug Name"}
+                            onChangeText={setDrugName}
+                            value={drugName}
+                            underlineColorAndroid="transparent"
+                            placeholderTextColor={color.secondfont}
+                        />
+                    </View>
+                    <View style={styles.MediInputMainContainer}>
+                        <TextInput
+                            style={styles.MediInputContainer}
+                            placeholder={"Your Number"}
+                            onChangeText={setNumber}
+                            value={number}
+                            underlineColorAndroid="transparent"
+                            placeholderTextColor={color.secondfont}
+                        />
+                    </View>
+                    <CustomBtn
                         btnText={"Notify me"}
                         containerStyle={{ marginTop: hp("2%") }}
                     />
-               </View>
-           </View>
+                </View>
+            </View>
         </Modal>
     )
 }
 
+
+export const AlterModal = ({
+    modalVisible,
+    setModalVisible,
+    data,
+}) => {
+
+    const MedicineRenderItem = (item) => {
+        return (
+            <View style={styles.alterFlatlistMainContainer}>
+                <View style={styles.alterListContainer}>
+                    <View style={styles.aleterImgContainer}>
+                        <Image
+                            source={item.image}
+                            resizeMode="contain"
+                            style={styles.alterImgStyle}
+                        />
+                    </View>
+                    <View style={styles.alterListtitleMAinContainer}>
+                        <View style={styles.alterListTitleContainer}>
+                            <Text style={styles.alterListTitleTextStyle}>
+                                {item.title}
+                            </Text>
+                        </View>
+                        <View style={styles.alterListSubtitleMainContainer}>
+                            <Text style={styles.alterListPriceStyle}>
+                                {item.price}
+                            </Text>
+                            <Text style={styles.alterPercentageStyle}>
+                                {item.percentage}
+                            </Text>
+                            <Text style={styles.alterPackStyle}>
+                                Pack of
+                            </Text>
+                            <Text style={styles.alterPackegeStyle}>
+                                {item.package}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+
+                <View style={styles.ProductSecondMainContainer}>
+                            <View style={[styles.ProductBagMainContainer, { alignItems:  'center' }]}>
+                                <Image
+                                    source={BagIcon}
+                                    style={styles.ProductBagIconStyle}
+                                />
+                            </View>
+                            <View style={styles.ProductBottomTextContainer}>
+                                <Text style={styles.ProductBottomTextStyle}>
+                                    {"Add to Bag"}
+                                </Text>
+                            </View>
+                            <View style={styles.ProductCountMainContainer}>
+                                <View style={styles.CountIconMainContainer}>
+                                    <Text style={styles.CountIconStyle}>
+                                        -
+                                    </Text>
+                                </View>
+                                <View style={styles.CountTextMainContiner}>
+                                    <Text style={styles.CountTextStyle}>
+                                        01
+                                    </Text>
+                                </View>
+                                <View style={styles.CountIconMainContainer}>
+                                    <Text style={styles.CountIconStyle}>
+                                        +
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+            </View>
+        )
+    }
+    return (
+        <Modal
+            statusBarTranslucent={true}
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+        >
+            <View style={styles.PresModalMainContainer}>
+                <TouchableOpacity onPress={() => {setModalVisible(false)}} style = {styles.alterFistContainer}>
+
+                </TouchableOpacity>
+                <View style={styles.alterModalMAinContainer}>
+                    <View style={styles.alterTitleMainContainer}>
+                        <Text style={styles.alterTitleTextStyle}>
+                            Alternatives
+                        </Text>
+                    </View>
+
+                    <View style={styles.subtitleMainContainer}>
+                        <Text style={styles.subtitleContainer}>
+                            These are of same composition but from different manufactures. They work the same
+                        </Text>
+                    </View>
+
+                    <FlatList
+                        nestedScrollEnabled={true}
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        data={data}
+                        contentContainerStyle={{ paddingBottom: hp('15%'), }}
+                        keyExtractor={item => item.id}
+                        renderItem={({ item }) => MedicineRenderItem(item)}
+                    />
+                </View>
+            </View>
+        </Modal>
+    )
+}
 const styles = StyleSheet.create({
     HeaderMainContainer: {
         height: hp("10%"),
@@ -598,54 +710,209 @@ const styles = StyleSheet.create({
         fontSize: fontSize.large,
         color: color.mainfont
     },
-    MediFirstContainer : {
-        height : hp("55%"),
-        width : wp("100%")
+    MediFirstContainer: {
+        height: hp("55%"),
+        width: wp("100%")
     },
-    MedicationModalMainContainer : {
-        height : hp("45%"),
-        width : wp("100%"),
-        backgroundColor : color.ModalBgColor,
+    MedicationModalMainContainer: {
+        height: hp("45%"),
+        width: wp("100%"),
+        backgroundColor: color.ModalBgColor,
     },
-    MediTitleMainContainer : {
-        height : hp("6%"),
-        width : wp("86%"),
-        alignSelf : 'center',
-        justifyContent : 'center',
-        marginTop : hp("2%")
+    MediTitleMainContainer: {
+        height: hp("6%"),
+        width: wp("86%"),
+        alignSelf: 'center',
+        justifyContent: 'center',
+        marginTop: hp("2%")
     },
-    MediTitleFontStyle : {
+    MediTitleFontStyle: {
         fontFamily: fontFamily.BOLD_FONT_FAMILY,
         fontSize: fontSize.mlarge,
         color: color.mainfont,
     },
-    MediSubTextContainer : {
-        height : hp("12%"),
-        width : wp("86%"),
-        alignSelf : 'center',
+    MediSubTextContainer: {
+        height: hp("12%"),
+        width: wp("86%"),
+        alignSelf: 'center',
+        justifyContent: 'center',
+    },
+    MediSubTextStyle: {
+        fontFamily: fontFamily.REGULAR_FORT_FAMILY,
+        fontSize: fontSize.lsmall,
+        color: color.secondMainFont
+    },
+    MediInputMainContainer: {
+        height: hp("7%"),
+        width: wp("86%"),
+        alignSelf: 'center',
+        borderBottomColor: color.mainfont,
+        borderBottomWidth: hp("0.2%"),
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: hp("0.5%")
+    },
+    MediInputContainer: {
+        height: hp("6%"),
+        width: wp("70%"),
+        justifyContent: 'center',
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        fontSize: fontSize.regular,
+        color: color.mainfont
+    },
+    alterFistContainer : {
+        height : hp("45%"),
+        width : wp("100%"),
+    },
+    alterModalMAinContainer: {
+        height: hp("55%"),
+        width: wp("100%"),
+        backgroundColor: color.ModalBgColor,
+    },
+    alterTitleMainContainer: {
+        height: hp("6%"),
+        width: wp("86%"),
+        marginTop: hp("1%"),
+        alignSelf: 'center',
+        justifyContent: 'center',
+    },
+    alterTitleTextStyle: {
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        fontSize: fontSize.mlarge,
+        color: color.mainfont
+    },
+    subtitleMainContainer: {
+        height: hp("6%"),
+        width: wp("86%"),
+        alignSelf: 'center',
+        justifyContent: 'center',
+    },
+    subtitleContainer: {
+        fontFamily: fontFamily.REGULAR_FORT_FAMILY,
+        fontSize: fontSize.lsmall,
+        color: color.mainfont
+    },
+    alterFlatlistMainContainer: {
+        height: hp("16%"),
+        width: wp("86%"),
+        alignSelf: 'center',
+        marginTop: hp("1%"),
+        borderBottomColor : color.lineColor,
+        borderBottomWidth : hp("0.1%"),
+    },
+    alterListContainer: {
+        height: hp("10%"),
+        width: wp("86%"),
+        flexDirection: 'row',
+    },
+    aleterImgContainer: {
+        height: hp("10%"),
+        width: wp("25%"),
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    alterImgStyle: {
+        height: hp("8%"),
+        width: wp("20%"),
+    },
+    alterListtitleMAinContainer: {
+        height: hp("10%"),
+        width: wp("60%"),
         justifyContent : 'center',
     },
-    MediSubTextStyle : {
-        fontFamily : fontFamily.REGULAR_FORT_FAMILY,
-        fontSize : fontSize.lsmall,
-        color : color.secondMainFont
+    alterListTitleContainer: {
+        height: hp("4%"),
+        width: wp("60%"),
+        justifyContent: 'center'
     },
-    MediInputMainContainer : {
-        height : hp("7%"),
-        width : wp("86%"),
-        alignSelf : 'center',
-        borderBottomColor : color.mainfont,
-        borderBottomWidth : hp("0.2%"),
-        justifyContent : 'center',
-        alignItems : 'center',
-        marginBottom : hp("0.5%")
+    alterListTitleTextStyle: {
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        fontSize: fontSize.xsmall,
+        color: color.mainfont
     },
-    MediInputContainer : {
-        height : hp("6%"),
-        width : wp("70%"),
-        justifyContent : 'center',
-        fontFamily : fontFamily.BOLD_FONT_FAMILY,
-        fontSize : fontSize.regular,
-        color : color.mainfont
-    }
+    alterListSubtitleMainContainer: {
+        height: hp("4%"),
+        width: wp("60%"),
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    alterListPriceStyle: {
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        fontSize: fontSize.msmall,
+        color: color.mainfont
+    },
+    alterPercentageStyle: {
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        fontSize: fontSize.lsmall,
+        color: color.redColor,
+        paddingHorizontal: wp("2%")
+    },
+    alterPackStyle: {
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        fontSize: fontSize.msmall,
+        color: color.secondfont,
+    },
+    alterPackegeStyle: {
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        fontSize: fontSize.msmall,
+        color: color.mainfont,
+        paddingHorizontal: wp("2%"),
+    },
+    ProductSecondMainContainer: {
+        height: hp("5%"),
+        width: wp("86%"),
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    ProductBagMainContainer: {
+        height: hp("5%"),
+        width: wp("15%"),
+        justifyContent: 'center',
+    },
+    ProductBagIconStyle: {
+        height: hp("3%"),
+        width: hp("3%"),
+    },
+    ProductBottomTextContainer: {
+        height: hp("5%"),
+        width: wp("30%"),
+        justifyContent: 'center',
+    },
+    ProductBottomTextStyle: {
+        fontSize: fontSize.msmall,
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        color: color.mainfont,
+    },
+    ProductCountMainContainer: {
+        height: hp("5%"),
+        width: wp("40%"),
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        paddingRight: wp("2%")
+    },
+    CountIconMainContainer: {
+        height: hp("4.4%"),
+        width: hp("4.4%"),
+        backgroundColor: color.countColor,
+        borderRadius: hp("6%"),
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    CountIconStyle: {
+        fontSize: fontSize.regular,
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        color: color.mainfont
+    },
+    CountTextMainContiner: {
+        height: hp("4%"),
+        width: wp("15%"),
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    CountTextStyle: {
+        fontSize: fontSize.msmall,
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        color: color.mainfont
+    },
 })
