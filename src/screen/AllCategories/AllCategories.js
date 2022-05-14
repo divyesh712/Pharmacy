@@ -19,9 +19,10 @@ import {
 export const CatergoryComponent = ({
     catImg,
     catText,
+    OnCatPress,
 }) => {
     return (
-        <View style={styles.catMainContainer}>
+        <TouchableOpacity onPress={OnCatPress} style={styles.catMainContainer}>
             <View style={styles.catImgContainer}>
                 <Image
                     source={catImg}
@@ -35,7 +36,7 @@ export const CatergoryComponent = ({
                 </Text>
             </View>
 
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -43,6 +44,9 @@ const AllCategories = (props) => {
 
     const [searchTerm, setSearchTerm] = useState("");
 
+    const OnSupplimentPress = () => {
+        props.navigation.navigate("Suppliments")
+    }
     return (
         <View style={styles.container}>
             <MyStatusBar />
@@ -87,6 +91,7 @@ const AllCategories = (props) => {
                 <CatergoryComponent
                     catText={"Suppliments"}
                     catImg={Category11}
+                    OnCatPress = {OnSupplimentPress}
                 />
             </View>
 

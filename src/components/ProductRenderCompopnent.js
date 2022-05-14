@@ -13,11 +13,12 @@ const ProductRenderComponent = ({
     comeFromBasket,
     comeFromOrders,
     OnArrowPress,
+    OnProductPress,
 }) => {
 
     const ProductRenderItem = (item) => {
         return (
-            <View style={styles.ProductMainContainer}>
+            <TouchableOpacity onPress={OnProductPress} style={styles.ProductMainContainer}>
                 <View style={styles.ProductFirstMainContainer}>
                     <View style={styles.ProductImgMainContainer}>
                         <Image
@@ -107,7 +108,7 @@ const ProductRenderComponent = ({
                 <View style={styles.footerMainContainer}>
                     <View style={styles.footerContainer}></View>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
         height: hp("22%"),
         width: wp("86%"),
         alignSelf: 'center',
-        marginVertical: hp("1%")
+        marginVertical: hp("1%"),
     },
     ProductFirstMainContainer: {
         height: hp("15%"),

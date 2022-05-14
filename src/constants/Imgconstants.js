@@ -28,3 +28,4 @@ export const Medicine1 = require("../assets/image/Medicine1.png");
 export const PrescriptionIcon = require("../assets/icon/PrescriptionIcon.png");
 export const Medicine2 = require("../assets/image/Medicine2.png");
 export const Medicine3 = require("../assets/image/Medicine3.png");
+export const MapIcon = require("../assets/icon/MapIcon.png");

@@ -156,17 +156,33 @@ export const AddAddressTextInput = ({
     AddressValue,
     placeholderText,
     containerStyle,
+    textInputStyle,
+    Icon,
 }) => {
     return (
         <View style={{ ...styles.AddAddrssTextInputMainContainer, ...containerStyle }}>
             <TextInput
-                style={styles.AddAddressInputContainer}
+                style={{ ...styles.AddAddressInputContainer, ...textInputStyle }}
                 placeholder={placeholderText}
                 onChangeText={onAddressChangeText}
                 value={AddressValue}
                 underlineColorAndroid="transparent"
                 placeholderTextColor={color.secondfont}
             />
+            {
+                Icon ?
+
+                    <View style={styles.AddressIconMainContainer}>
+                        <Image
+                            source={Icon}
+                            style={styles.AddressIconStyle}
+                            resizeMode="contain"
+                        />
+                    </View>
+
+                    :
+                    null
+            }
         </View>
     )
 }
@@ -380,35 +396,35 @@ export const AlterModal = ({
                 </View>
 
                 <View style={styles.ProductSecondMainContainer}>
-                            <View style={[styles.ProductBagMainContainer, { alignItems:  'center' }]}>
-                                <Image
-                                    source={BagIcon}
-                                    style={styles.ProductBagIconStyle}
-                                />
-                            </View>
-                            <View style={styles.ProductBottomTextContainer}>
-                                <Text style={styles.ProductBottomTextStyle}>
-                                    {"Add to Bag"}
-                                </Text>
-                            </View>
-                            <View style={styles.ProductCountMainContainer}>
-                                <View style={styles.CountIconMainContainer}>
-                                    <Text style={styles.CountIconStyle}>
-                                        -
-                                    </Text>
-                                </View>
-                                <View style={styles.CountTextMainContiner}>
-                                    <Text style={styles.CountTextStyle}>
-                                        01
-                                    </Text>
-                                </View>
-                                <View style={styles.CountIconMainContainer}>
-                                    <Text style={styles.CountIconStyle}>
-                                        +
-                                    </Text>
-                                </View>
-                            </View>
+                    <View style={[styles.ProductBagMainContainer, { alignItems: 'center' }]}>
+                        <Image
+                            source={BagIcon}
+                            style={styles.ProductBagIconStyle}
+                        />
+                    </View>
+                    <View style={styles.ProductBottomTextContainer}>
+                        <Text style={styles.ProductBottomTextStyle}>
+                            {"Add to Bag"}
+                        </Text>
+                    </View>
+                    <View style={styles.ProductCountMainContainer}>
+                        <View style={styles.CountIconMainContainer}>
+                            <Text style={styles.CountIconStyle}>
+                                -
+                            </Text>
                         </View>
+                        <View style={styles.CountTextMainContiner}>
+                            <Text style={styles.CountTextStyle}>
+                                01
+                            </Text>
+                        </View>
+                        <View style={styles.CountIconMainContainer}>
+                            <Text style={styles.CountIconStyle}>
+                                +
+                            </Text>
+                        </View>
+                    </View>
+                </View>
             </View>
         )
     }
@@ -420,7 +436,7 @@ export const AlterModal = ({
             visible={modalVisible}
         >
             <View style={styles.PresModalMainContainer}>
-                <TouchableOpacity onPress={() => {setModalVisible(false)}} style = {styles.alterFistContainer}>
+                <TouchableOpacity onPress={() => { setModalVisible(false) }} style={styles.alterFistContainer}>
 
                 </TouchableOpacity>
                 <View style={styles.alterModalMAinContainer}>
@@ -450,6 +466,95 @@ export const AlterModal = ({
         </Modal>
     )
 }
+
+
+export const CheckoutUploadPrecriptionModal = ({
+    setUploadPresModal,
+    uploadPresModal,
+    OnGalleryPress,
+}) => {
+    return (
+        <Modal
+            statusBarTranslucent={true}
+            animationType="slide"
+            transparent={true}
+            visible={uploadPresModal}
+        >
+            <View style={styles.PresModalMainContainer}>
+                <TouchableOpacity onPress={() => { setUploadPresModal(false) }} style={styles.CheckPresFirstContainer}>
+
+                </TouchableOpacity>
+                <View style={styles.CheckPresModalContainer}>
+                    <View style={styles.PresTextMainContainer}>
+                        <Text style={styles.PresTextFontStyle}>
+                            Upload Prescription
+                        </Text>
+                    </View>
+
+                    <TouchableOpacity
+                        onPress={OnGalleryPress}
+                        style={styles.PresOptionMainContainer}>
+                        <View style={styles.PresOtionImgMainContainer}>
+                            <Image
+                                source={TackPhotoIcon}
+                                style={styles.PresImgStyle}
+                                resizeMode="contain"
+                            />
+                        </View>
+                        <View style={styles.PresOptionTextMainContainer}>
+                            <Text style={styles.PresOptionTextStyle}>
+                                Take a Photo
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={OnGalleryPress}
+                        style={styles.PresOptionMainContainer}>
+                        <View style={styles.PresOtionImgMainContainer}>
+                            <Image
+                                source={GalleryIcon}
+                                style={styles.PresImgStyle}
+                                resizeMode="contain"
+                            />
+                        </View>
+                        <View style={styles.PresOptionTextMainContainer}>
+                            <Text style={styles.PresOptionTextStyle}>
+                                Select from gallery
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+
+
+                    <TouchableOpacity
+                        onPress={OnGalleryPress}
+                        style={styles.PresOptionMainContainer}>
+                        <View style={styles.PresOtionImgMainContainer}>
+                            <Image
+                                source={GalleryIcon}
+                                style={styles.PresImgStyle}
+                                resizeMode="contain"
+                            />
+                        </View>
+                        <View style={styles.PresOptionTextMainContainer}>
+                            <Text style={styles.PresOptionTextStyle}>
+                                Select from Prescriptions
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+
+
+                    <View style={styles.PresModalBottomMainContainer}>
+                        <Text style={styles.PresModalBottomTextStyle}>
+                            Valid Prescription
+                        </Text>
+                    </View>
+                </View>
+            </View>
+        </Modal>
+    )
+}
+
 const styles = StyleSheet.create({
     HeaderMainContainer: {
         height: hp("10%"),
@@ -610,7 +715,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         borderBottomWidth: hp("0.2%"),
         borderBottomColor: color.mainfont,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     AddAddressInputContainer: {
         height: hp("6%"),
@@ -620,6 +725,16 @@ const styles = StyleSheet.create({
         fontSize: fontSize.regular,
         color: color.mainfont,
         paddingLeft: wp("5%")
+    },
+    AddressIconMainContainer: {
+        height: hp("5%"),
+        width: wp("10%"),
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    AddressIconStyle: {
+        height: hp("3%"),
+        width: hp("3%"),
     },
     EditIconStyle: {
         height: hp("3%"),
@@ -632,6 +747,13 @@ const styles = StyleSheet.create({
     },
     PresModalContainer: {
         height: hp("35%"),
+        width: wp("100%"),
+        backgroundColor: color.ModalBgColor,
+        position: 'absolute',
+        bottom: 0
+    },
+    CheckPresModalContainer: {
+        height: hp("45%"),
         width: wp("100%"),
         backgroundColor: color.ModalBgColor,
         position: 'absolute',
@@ -654,7 +776,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: hp("2%")
+        marginBottom: hp("2%"),
+        backgroundColor: color.bg_main,
+        borderRadius: hp("2%")
     },
     PresOtionImgMainContainer: {
         height: hp("6%"),
@@ -691,6 +815,10 @@ const styles = StyleSheet.create({
     },
     PresFirstContainer: {
         height: hp("65%"),
+        width: wp("100%"),
+    },
+    CheckPresFirstContainer: {
+        height: hp("55%"),
         width: wp("100%"),
     },
     TalkPharTextInputMainContainer: {
@@ -760,9 +888,9 @@ const styles = StyleSheet.create({
         fontSize: fontSize.regular,
         color: color.mainfont
     },
-    alterFistContainer : {
-        height : hp("45%"),
-        width : wp("100%"),
+    alterFistContainer: {
+        height: hp("45%"),
+        width: wp("100%"),
     },
     alterModalMAinContainer: {
         height: hp("55%"),
@@ -797,8 +925,8 @@ const styles = StyleSheet.create({
         width: wp("86%"),
         alignSelf: 'center',
         marginTop: hp("1%"),
-        borderBottomColor : color.lineColor,
-        borderBottomWidth : hp("0.1%"),
+        borderBottomColor: color.lineColor,
+        borderBottomWidth: hp("0.1%"),
     },
     alterListContainer: {
         height: hp("10%"),
@@ -818,7 +946,7 @@ const styles = StyleSheet.create({
     alterListtitleMAinContainer: {
         height: hp("10%"),
         width: wp("60%"),
-        justifyContent : 'center',
+        justifyContent: 'center',
     },
     alterListTitleContainer: {
         height: hp("4%"),

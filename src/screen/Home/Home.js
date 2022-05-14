@@ -160,15 +160,7 @@ const Home = (props) => {
                     pharmNumber={pharmNumber}
                 />
 
-                <View style={styles.BottomTextContainer}>
-                    <Text style={styles.BottomTextStyle}>
-                        Deal Of The Day
-                    </Text>
-                </View>
-
-                <ProductRenderComponent
-                    data={ProductIrems}
-                />
+               
             </ScrollView>
         </View>
     )

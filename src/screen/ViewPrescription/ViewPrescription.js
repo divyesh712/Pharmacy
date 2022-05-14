@@ -51,7 +51,9 @@ const ViewPrescription = (props) => {
 
     const [prescription, setPrescription] = useState(props.route.params.Prescription);
 
-    console.log(prescription)
+    const OnCheckOutPress = () => {
+        props.navigation.navigate("Checkout");
+    }
 
     return (
         <View style={[styles.container]}>
@@ -97,7 +99,8 @@ const ViewPrescription = (props) => {
                                 bottom: 0,
                                 marginTop: hp("1%")
                             }}
-                            btnText={"Add to Bag"}
+                            btnText={"Checkout"}
+                            OnBtnPress = {OnCheckOutPress}
                         />
                     </View>
             }
