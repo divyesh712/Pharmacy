@@ -219,7 +219,7 @@ const Checkout = (props) => {
                                 btnText={"+  Add New Address"}
                                 containerStyle={{
                                     marginTop: hp("3%"),
-                                    borderStyle: 'dotted',
+                                    borderStyle: 'dashed',
                                     backgroundColor: color.bg_main,
                                     borderWidth: hp("0.2%"),
                                     borderRadius: 0.001

@@ -55,6 +55,7 @@ const Bag = (props) => {
                 headerText={"Hey Sherya"}
                 basketItemExist={true}
                 OnDrawerPress = {() => {props.navigation.openDrawer()}}
+
             />
 
             <TitleTextCompnent

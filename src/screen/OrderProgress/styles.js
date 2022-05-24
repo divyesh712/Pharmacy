@@ -57,6 +57,13 @@ export default StyleSheet.create({
         fontFamily : fontFamily.BOLD_FONT_FAMILY,
         fontSize : fontSize.msmall,
     },
+    oldPricelineStyle : {
+        height : hp("0.2%"),
+        width : wp("12%"),
+        backgroundColor : color.lineColor,
+        position : "absolute",
+        top : hp("1.2%")
+    },
     OrderDateMainContainer : {
         height : hp("6%"),
         width :wp("86%"),

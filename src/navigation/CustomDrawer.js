@@ -7,7 +7,9 @@ import fontSize from '../utils/fontsize';
 import fontFamily from '../utils/fontFamily';
 import { RemoveIcon, EditIcon } from '../constants/Imgconstants';
 
+
 const CustomDrawer = (props) => {
+
     return (
         <View style={styles.container} >
             <DrawerContentScrollView
@@ -34,12 +36,14 @@ const CustomDrawer = (props) => {
                             +91 9873456788
                         </Text>
                     </View>
-                    <View style={styles.EditIconMainContainer}>
+                    <TouchableOpacity onPress={() =>{ props.navigation.navigate('ChangeName')}} style={styles.EditIconMainContainer}>
                         <Image
                             source={EditIcon}
                             style={styles.editIconStyle}
+                        
+                           
                         />
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.LineMainContainer}>
                 </View>
@@ -68,6 +72,7 @@ const CustomDrawer = (props) => {
                     </View>
                 </View>
             </DrawerContentScrollView>
+
         </View>
     )
 }

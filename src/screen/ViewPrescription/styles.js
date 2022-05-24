@@ -24,11 +24,13 @@ export default StyleSheet.create({
         height : hp("25%"),
         width :wp("86%"),
         alignSelf : 'center',
-        marginTop : hp("3%")
+        marginTop : hp("3%"),
+        // backgroundColor:"pink"
     },
     imgContainer : {
-        height : hp("25%"),
-        width : wp("86%"),
+        height : hp("23%"),
+        width : wp("85%"),
+        // backgroundColor:'red'
  
     }
 })

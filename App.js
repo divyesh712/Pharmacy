@@ -5,7 +5,7 @@ import { useFonts } from "expo-font";
 
 import Login from './src/screen/Login/Login';
 import DrawerScreen from './src/navigation/DrawerScreen';
-
+import ChangeName from './src/screen/ChangeName/ChangeName'
 const Stack = createStackNavigator();
 
 const AppWithNavContainer = () => {
@@ -28,6 +28,7 @@ const AppWithNavContainer = () => {
           >
             <Stack.Screen name="Login" component={Login} options={{ ...TransitionPresets.SlideFromRightIOS }} />
             <Stack.Screen name="DrawerScreen" component={DrawerScreen} />
+            <Stack.Screen name="ChangeName" component={ChangeName} />
           </Stack.Navigator>
 
           :

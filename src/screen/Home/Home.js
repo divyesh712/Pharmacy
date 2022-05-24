@@ -3,7 +3,7 @@ import { View, Text, Modal, Image, TextInput, FlatList, TouchableOpacity, } from
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from './styles';
 import MyStatusBar from '../../components/Statusbar';
-import { HeaderComponent, SearchComponent, UploadPrecriptionModal, TalkToPharmasiticModal, CategoriesComponents } from '../../components/sharedComponents';
+import { HeaderComponent, SearchComponent, UploadPrecriptionModal, TalkToPharmasiticModal, CategoriesComponents, ChangeNameComponent, EnterNameComponent } from '../../components/sharedComponents';
 import { color } from '../../utils/color';
 import ProductRenderComponent from '../../components/ProductRenderCompopnent';
 import { Category1, Category2, Category3, Category4, Category5, Category6 } from '../../constants/Imgconstants';
@@ -55,13 +55,25 @@ const Home = (props) => {
     const [uploadPresModal, setUploadPresModal] = useState(false);
     const [talkPharModal, setTalkPharModal] = useState(false);
     const [pharmNumber, setPharmNumber] = useState("+91  ");
+    const [EnterNameModel, setEnterNameModel] = useState(false);
 
     const OnDrawerPress = () => {
         props.navigation.openDrawer()
     }
 
+    const BasketItem = () => {
+        props.navigation.navigate('Bag')
+    }
+
+    const closeModal = () => {
+        setEnterNameModel(false)
+    }
     const OnUploadPresPress = () => {
         setUploadPresModal(true)
+    }
+
+    const OnEnterNamePress = () => {
+        setEnterNameModel(true)
     }
 
     const OnTalkPharmasticPress = () => {
@@ -79,7 +91,10 @@ const Home = (props) => {
     const OnAllCategoriesPrerss = () => {
         props.navigation.navigate("AllCategories");
     }
-    
+    const FindGenericPress = () => {
+        props.navigation.navigate('FindGeneric');
+    }
+
     return (
         <View style={styles.container}>
 
@@ -88,6 +103,7 @@ const Home = (props) => {
                 <HeaderComponent
                     headerText={"Hey Sherya"}
                     OnDrawerPress={OnDrawerPress}
+                    BasketItem={BasketItem}
                 />
 
                 <SearchComponent
@@ -96,8 +112,10 @@ const Home = (props) => {
                     placeholderText={"Search anything , we got all them"}
                 />
 
-                <View style={styles.BlankViewMainContainer}>
-                </View>
+                <TouchableOpacity onPress={OnEnterNamePress} style={styles.BlankViewMainContainer}>
+
+
+                </TouchableOpacity>
 
                 <View style={styles.categoriesMainContainer}>
                     <CategoriesComponents
@@ -135,6 +153,8 @@ const Home = (props) => {
                     <CategoriesComponents
                         categoryName={"Find Generic"}
                         categoryImg={Category6}
+                        OnCategoryPress={FindGenericPress}
+                    
                     />
                 </View>
 
@@ -159,8 +179,15 @@ const Home = (props) => {
                     setPharmNumber={setPharmNumber}
                     pharmNumber={pharmNumber}
                 />
+           
+                <EnterNameComponent
+                    setEnterNameModel={setEnterNameModel}
+                    EnterNameModel={EnterNameModel}
+                    closeModal={closeModal}
+                />
 
-               
+
+
             </ScrollView>
         </View>
     )

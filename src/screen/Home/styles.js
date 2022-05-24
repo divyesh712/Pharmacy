@@ -24,13 +24,16 @@ export default StyleSheet.create({
         alignSelf : 'center',
         flexDirection : 'row',
         justifyContent : 'space-between',
-        alignItems : 'center'
+        alignItems : 'center',
+
+
     },
     BottomTextContainer : {
         height : hp("8%"),
         width : wp("86%"),
         alignSelf : 'center',
         justifyContent : 'center',
+        
     },
     BottomTextStyle : {
         fontSize : fontSize.regular,

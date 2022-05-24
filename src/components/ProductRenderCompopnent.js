@@ -15,7 +15,7 @@ const ProductRenderComponent = ({
     OnArrowPress,
     OnProductPress,
 }) => {
-
+    
     const ProductRenderItem = (item) => {
         return (
             <TouchableOpacity onPress={OnProductPress} style={styles.ProductMainContainer}>
@@ -48,6 +48,9 @@ const ProductRenderComponent = ({
                                 <Text style={styles.ProductOldPriceFontStyle}>
                                     {item.oldPrice}
                                 </Text>
+                                <View style = {styles.oldPricelineStyle }>
+
+                                </View>
                             </View>
                             <View style={styles.ProductPriceContainer}>
                                 <Text style={styles.DiscountFontStyle}>
@@ -284,7 +287,14 @@ const styles = StyleSheet.create({
     ArrowUpStyle  :{
         height : hp("3%"),
         width: hp("3%"),
-    }
+    },
+    oldPricelineStyle : {
+        height : hp("0.2%"),
+        width : wp("12%"),
+        backgroundColor : color.lineColor,
+        position : "absolute",
+        top : hp("1.3%")
+    },
 })
 
 export default ProductRenderComponent;
