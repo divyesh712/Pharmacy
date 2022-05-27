@@ -45,6 +45,9 @@ const OrderProgress = (props) => {
                             <Text style={[styles.ordertTextStyle, { color: color.secondfont }]}>
                                 {order.oldPrice}
                             </Text>
+                            <View style = {styles.oldPricelineStyle }>
+
+                                </View>
                         </View>
                         <View style={styles.OrderPriceMainContainer}>
                             <Text style={[styles.ordertTextStyle, { color: color.highlighfont }]}>

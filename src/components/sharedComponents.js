@@ -12,6 +12,7 @@ export const HeaderComponent = ({
     headerText,
     basketItemExist,
     OnDrawerPress,
+    BasketItem
 }) => {
     return (
         <View style={styles.HeaderMainContainer}>
@@ -27,7 +28,7 @@ export const HeaderComponent = ({
                     {headerText}
                 </Text>
             </View>
-            <View style={[styles.HeaderIconMainContainer, { alignItems: 'flex-end' }]}>
+            <TouchableOpacity onPress={BasketItem} style={[styles.HeaderIconMainContainer, { alignItems: 'flex-end' }]}>
                 <View style={[styles.BagIconContainer, {
                     width: basketItemExist ? hp("8%") : hp("5%"),
                     flexDirection: basketItemExist ? 'row' : 'column'
@@ -35,6 +36,7 @@ export const HeaderComponent = ({
                     <Image
                         source={BagIcon}
                         style={styles.BagIconStyle}
+
                     />
                     {
                         basketItemExist ?
@@ -48,7 +50,7 @@ export const HeaderComponent = ({
                     }
 
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -136,7 +138,7 @@ export const OrderProgressReport = ({
     return (
         <View style={{ ...styles.OrderReportMainContainer, ...containerStyle }}>
             <View style={styles.BoxMainContainer}>
-                <View style={[styles.BoxContainer, { borderStyle: orderProgressComplete ? 'solid' : 'dotted', borderRadius: 0.1 }]}>
+                <View style={[styles.BoxContainer, { borderStyle: orderProgressComplete ? 'solid' : 'dashed', borderRadius: 0.1 }]}>
                     <Text style={[styles.BoxTextStyle, { color: orderProgressComplete ? color.mainfont : color.secondfont }]}>
                         {orderProgressStep}
                     </Text>
@@ -190,6 +192,8 @@ export const AddAddressTextInput = ({
 export const UploadPrecriptionModal = ({
     setUploadPresModal,
     uploadPresModal,
+    pickImage,
+    CameraOpen
 }) => {
     return (
         <Modal
@@ -216,11 +220,11 @@ export const UploadPrecriptionModal = ({
                                 resizeMode="contain"
                             />
                         </View>
-                        <View style={styles.PresOptionTextMainContainer}>
+                        <TouchableOpacity onPress={CameraOpen}style={styles.PresOptionTextMainContainer}>
                             <Text style={styles.PresOptionTextStyle}>
                                 Take a Photo
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
 
                     <View style={styles.PresOptionMainContainer}>
@@ -231,11 +235,11 @@ export const UploadPrecriptionModal = ({
                                 resizeMode="contain"
                             />
                         </View>
-                        <View style={styles.PresOptionTextMainContainer}>
+                        <TouchableOpacity onPress={pickImage} style={styles.PresOptionTextMainContainer}>
                             <Text style={styles.PresOptionTextStyle}>
                                 Select from gallery
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
 
                     <View style={styles.PresModalBottomMainContainer}>
@@ -359,6 +363,7 @@ export const AlterModal = ({
     modalVisible,
     setModalVisible,
     data,
+
 }) => {
 
     const MedicineRenderItem = (item) => {
@@ -378,6 +383,19 @@ export const AlterModal = ({
                                 {item.title}
                             </Text>
                         </View>
+                        <View style={styles.mainaltertitle}>
+                            <View style={styles.alterListTitleContainer2}>
+                                <Text style={styles.malterListTitleTextStyle}>
+                                    {item.title1}
+                                </Text>
+                            </View>
+                            <View style={styles.alterListTitleContainer3}>
+                                <Text style={styles.LalterListTitleTextStyle}>
+                                    {item.title2}
+                                </Text>
+                            </View>
+                        </View>
+                       
                         <View style={styles.alterListSubtitleMainContainer}>
                             <Text style={styles.alterListPriceStyle}>
                                 {item.price}
@@ -472,6 +490,8 @@ export const CheckoutUploadPrecriptionModal = ({
     setUploadPresModal,
     uploadPresModal,
     OnGalleryPress,
+    pickImage,
+    CameraOpen,
 }) => {
     return (
         <Modal
@@ -501,28 +521,28 @@ export const CheckoutUploadPrecriptionModal = ({
                                 resizeMode="contain"
                             />
                         </View>
-                        <View style={styles.PresOptionTextMainContainer}>
+                        <TouchableOpacity onPress={CameraOpen} style={styles.PresOptionTextMainContainer}>
                             <Text style={styles.PresOptionTextStyle}>
                                 Take a Photo
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={OnGalleryPress}
                         style={styles.PresOptionMainContainer}>
-                        <View style={styles.PresOtionImgMainContainer}>
+                        <TouchableOpacity style={styles.PresOtionImgMainContainer}>
                             <Image
                                 source={GalleryIcon}
                                 style={styles.PresImgStyle}
                                 resizeMode="contain"
                             />
-                        </View>
-                        <View style={styles.PresOptionTextMainContainer}>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={pickImage} style={styles.PresOptionTextMainContainer}>
                             <Text style={styles.PresOptionTextStyle}>
                                 Select from gallery
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                     </TouchableOpacity>
 
 
@@ -555,6 +575,81 @@ export const CheckoutUploadPrecriptionModal = ({
     )
 }
 
+export const ChangeNameComponent = ({
+    ChangeNameModel,
+    setChangeNameModel,
+}) => {
+    return (
+        <Modal
+            statusBarTranslucent={true}
+            animationType="slide"
+            transparent={true}
+            visible={ChangeNameModel}
+        >
+            <View style={styles.PresModalMainContainer}>
+                <View style={{ flex: 1 }}>
+                    <View style={{ height: hp('23%'), }}></View>
+                    <View style={styles.changenameview}>
+                        <Text style={styles.changenametext}>Want to change your name? Go ahead</Text>
+                    </View>
+                    <View style={{ height: hp('5.5%'), width: wp('86%'), }}></View>
+                    <View style={styles.nameview}>
+                        <TextInput style={styles.nametext}>Shreya</TextInput>
+                    </View>
+                    <View style={styles.lineview}></View>
+                    <View style={{ height: hp('6%'), width: wp('100%') }}></View>
+                    <CustomBtn
+                        btnText={"Change it"}
+                    // containerStyle={{ marginTop: hp("2%") }}
+                    />
+                    <View style={{ height: hp('8%'), width: wp('86%'), alignSelf: 'center' }}>
+                        <TouchableOpacity onPress={() => { setChangeNameModel(false) }} style={styles.nevermindview}>
+                            <Text style={styles.nevermindtext}>Never Mind</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+        </Modal>
+    )
+}
+
+export const EnterNameComponent = ({
+    EnterNameModel,
+    setEnterNameModel,
+    closeModal,
+}) => {
+    return (
+        <Modal
+            statusBarTranslucent={true}
+            animationType="slide"
+            transparent={true}
+            visible={EnterNameModel}
+        >
+            <View style={styles.PresModalMainContainer}>
+                <View style={{ flex: 1 }}>
+                    <View style={{ height: hp('23%'), }}></View>
+                    <View style={styles.changenameview}>
+                        <Text style={styles.changenametext}>You are almost there! 👋</Text>
+                    </View>
+                    <View style={{ height: hp('5.5%'), width: wp('86%'), }}></View>
+                    <TouchableOpacity style={styles.Enternameview}>
+                        <TextInput style={styles.Enternametext}>Your Name</TextInput>
+                    </TouchableOpacity>
+                    <View style={styles.lineview}></View>
+                    <View style={{ height: hp('6%'), width: wp('100%') }}></View>
+                    <CustomBtn
+                        btnText={"Create account"}
+                        OnBtnPress={closeModal}
+                    // containerStyle={{ marginTop: hp("2%") }}
+                    />
+                </View>
+            </View>
+        </Modal>
+    )
+}
+
+
+
 const styles = StyleSheet.create({
     HeaderMainContainer: {
         height: hp("10%"),
@@ -585,7 +680,8 @@ const styles = StyleSheet.create({
     },
     BagIconStyle: {
         height: hp("2.8%"),
-        width: hp("2.8%")
+        width: hp("2.8%"),
+
     },
     BagIconContainer: {
         height: hp("5%"),
@@ -628,28 +724,35 @@ const styles = StyleSheet.create({
         width: wp("25%"),
         backgroundColor: color.light_bg,
         justifyContent: 'center',
-        borderRadius: hp("1%")
+        borderRadius: hp("1%"),
+
     },
     categoriesImgMainContainer: {
         height: hp("8%"),
         width: wp("25%"),
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        //    backgroundColor:"red"
     },
     cateImgStyle: {
         height: hp("7%"),
-        width: hp("7%")
+        width: hp("7%"),
+        justifyContent: "center",
+        alignItems: 'center'
     },
     CatTextMainContainer: {
         height: hp("5%"),
         width: wp("25%"),
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginLeft: wp('1%'),  
+
     },
     CatTextStyle: {
         fontSize: fontSize.small,
         fontFamily: fontFamily.REGULAR_FORT_FAMILY,
         color: color.mainfont,
+        textAlign:"center",
     },
     BasketItemCountMainContainer: {
         height: hp("3%"),
@@ -763,7 +866,7 @@ const styles = StyleSheet.create({
         height: hp("10%"),
         width: wp("86%"),
         alignSelf: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     PresTextFontStyle: {
         fontFamily: fontFamily.BOLD_FONT_FAMILY,
@@ -791,7 +894,7 @@ const styles = StyleSheet.create({
         width: hp("4.4%")
     },
     PresOptionTextMainContainer: {
-        height: hp("5%"),
+        height: hp("5.6%"),
         width: wp("50%"),
         justifyContent: 'center',
     },
@@ -921,7 +1024,7 @@ const styles = StyleSheet.create({
         color: color.mainfont
     },
     alterFlatlistMainContainer: {
-        height: hp("16%"),
+        height: hp("21%"),
         width: wp("86%"),
         alignSelf: 'center',
         marginTop: hp("1%"),
@@ -929,12 +1032,12 @@ const styles = StyleSheet.create({
         borderBottomWidth: hp("0.1%"),
     },
     alterListContainer: {
-        height: hp("10%"),
+        height: hp("14%"),
         width: wp("86%"),
         flexDirection: 'row',
     },
     aleterImgContainer: {
-        height: hp("10%"),
+        height: hp("14%"),
         width: wp("25%"),
         justifyContent: 'center',
         alignItems: 'center',
@@ -944,7 +1047,7 @@ const styles = StyleSheet.create({
         width: wp("20%"),
     },
     alterListtitleMAinContainer: {
-        height: hp("10%"),
+        height: hp("14%"),
         width: wp("60%"),
         justifyContent: 'center',
     },
@@ -1043,4 +1146,84 @@ const styles = StyleSheet.create({
         fontFamily: fontFamily.BOLD_FONT_FAMILY,
         color: color.mainfont
     },
+    changenameview: {
+        height: hp('10%'),
+        width: wp('86%'),
+        alignSelf: 'center'
+    },
+    changenametext: {
+        fontSize: fontSize.large,
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        color: color.mainfont
+    },
+    nameview: {
+        height: hp('5%'),
+        width: wp('76%'),
+        alignSelf: 'center',
+        justifyContent: 'center'
+    },
+    nametext: {
+        fontSize: fontSize.mlarge,
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        color: color.mainfont,
+    },
+    lineview: {
+        height: hp("1%"), width: wp("86%"),
+        alignSelf: 'center',
+        borderBottomColor: color.mainfont,
+        borderBottomWidth: hp("0.3%"),
+    },
+    nevermindview: {
+        height: hp('8%'),
+        width: wp('86%'),
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    nevermindtext: {
+        fontSize: fontSize.regular,
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        color: color.mainfont,
+    },
+    Enternameview: {
+        height: hp('5%'),
+        width: wp('76%'),
+        alignSelf: 'center',
+        justifyContent: 'center'
+    },
+    Enternametext: {
+        fontSize: fontSize.mlarge,
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        color: color.secondfont,
+
+    },
+    alterListTitleContainer2: {
+        height: hp("4%"),
+        width: wp("26%"),
+        justifyContent: 'center',
+       
+    },
+    malterListTitleTextStyle: {
+        fontFamily: fontFamily.REGULAR_FORT_FAMILY,
+        fontSize: fontSize.msmall,
+        color: color.secondfont,
+    },
+    LalterListTitleTextStyle: {
+        fontFamily: fontFamily.BOLD_FONT_FAMILY,
+        fontSize: fontSize.lsmall,
+        color: color.mainfont
+    },
+    alterListTitleContainer3: {
+        height: hp("4%"),
+        width: wp("30%"),
+        justifyContent: 'center',
+        // backgroundColor:"red"
+    },
+    mainaltertitle: {
+        height: hp("4%"),
+        width: wp("60%"),
+        alignSelf: "center",
+        flexDirection: "row",
+
+    },
+
 })

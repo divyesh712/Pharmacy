@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { View, Text, Image, FlatList, TouchableOpacity, } from 'react-native';
 import MyStatusBar from '../../components/Statusbar';
-import { HeaderComponent, TitleTextCompnent } from '../../components/sharedComponents';
+import { HeaderComponent, TitleTextCompnent,SearchComponent } from '../../components/sharedComponents';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { GoogleMapIcon } from '../../constants/Imgconstants';
 
@@ -24,6 +24,8 @@ const StoresItems = [
 
 const Stores = (props) => {
 
+    const [searchTerm, setSearchTerm] = useState("");
+    
     const OnDrawerPress = () => {
         props.navigation.openDrawer()
     }
@@ -58,10 +60,17 @@ const Stores = (props) => {
                 OnDrawerPress={OnDrawerPress}
                 basketItemExist={true}
             />
-
             <TitleTextCompnent
                 title={"Our Stores"}
                 containerStyle={{ marginTop: hp("2%") }}
+            />
+                 <SearchComponent
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                placeholderText={"Search for anything"}
+                searchContainerStyle={{
+                    marginTop: hp("3%")
+                }}
             />
 
             <FlatList

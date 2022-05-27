@@ -4,7 +4,7 @@ import styles from './styles';
 import MyStatusBar from '../../components/Statusbar';
 import { HeaderComponent, TitleTextCompnent } from '../../components/sharedComponents';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { PrescriptionImg } from '../../constants/Imgconstants';
+import { PrescriptionImg,prescription_2 } from '../../constants/Imgconstants';
 import { CustomBtn } from '../../components/CustomBtn';
 import ProductRenderComponent from "../../components/ProductRenderCompopnent";
 
@@ -77,7 +77,7 @@ const ViewPrescription = (props) => {
 
             <View style={styles.ImgMainContainer}>
                 <Image
-                    source={PrescriptionImg}
+                    source={prescription_2}
                     style={styles.imgContainer}
                 // resizeMode = "contain"
                 />

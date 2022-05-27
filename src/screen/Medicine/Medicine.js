@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState,useEffect } from 'react';
 import { View, Text, Image, ScrollView, TextInput, StyleSheet, TouchableOpacity, } from 'react-native';
 import MyStatusBar from '../../components/Statusbar';
 import { HeaderComponent, TitleTextCompnent, SearchComponent, AlterModal, MedicationModal } from '../../components/sharedComponents';
@@ -10,12 +10,18 @@ import { CustomBtn } from '../../components/CustomBtn';
 import { color } from '../../utils/color';
 import { SliderBox } from "react-native-image-slider-box";
 import fontFamily from '../../utils/fontFamily';
+import AuthServices from '../../Api/authservices';
+import NetworkCheck from '../../utils/networkcheck';
+import MYDROP from '../../utils/Dropdown';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const medicineItem = [
     {
         id : 1,
         image : Medicine3,
         title : "Crocin Advance Tablet",
+        title1: "Manufacture:",
+        title2: "Micro Labs Ltd",
         price : "₹50",
         percentage : "(+100%)",
         package : "25",
@@ -24,6 +30,8 @@ const medicineItem = [
         id : 2,
         image : Medicine3,
         title : "Crocin Advance Tablet",
+        title1: "Manufacture:",
+        title2: "Micro Labs Ltd",
         price : "₹50",
         percentage : "(+100%)",
         package : "25",
@@ -32,6 +40,8 @@ const medicineItem = [
         id : 3,
         image : Medicine3,
         title : "Crocin Advance Tablet",
+        title1: "Manufacture:",
+        title2: "Micro Labs Ltd",
         price : "₹50",
         percentage : "(+100%)",
         package : "25",
@@ -40,6 +50,8 @@ const medicineItem = [
         id : 4,
         image : Medicine3,
         title : "Crocin Advance Tablet",
+        title1: "Manufacture:",
+        title2: "Micro Labs Ltd",
         price : "₹50",
         percentage : "(+100%)",
         package : "25",
@@ -53,15 +65,56 @@ const Medicine = (props) => {
         Medicine2,
         Medicine2,
     ])
+
     const [ alterModalVisible , setAlterModalVisible ] = useState(false);
-    
+    const [isAppLoading, Setisapp_loding] = useState(false);
+    const [ alterMedicine , setalterMedicine ] = useState(false);
+
     const OnDrawerPress = () => {
         props.navigation.openDrawer()
     }
 
     const OnAlternativesPress = () => {
         setAlterModalVisible(true);
+        GetAlternateMedicine();
     }
+
+    const GetAlternateMedicine = async () => {
+
+        let Apidata = {};
+
+        const isConnected = await NetworkCheck.isNetworkAvailable()
+
+        if (isConnected) {
+
+            try {
+                Apidata = {
+                    "salt_Id":'1',
+                   "medicine_Id":'1',
+                }
+
+                const { data } = await AuthServices.Get_Alternatemedicine(Apidata)
+                console.log("DATA IS====>", data)
+                if (data.status !== 200) {
+                    Setisapp_loding(false)
+                }
+                if (data.status == 200) {
+                    Setisapp_loding(false);
+                    setalterMedicine(data.data);
+                }
+            }
+            catch (error) {
+
+                Setisapp_loding(false);
+                console.log(error)
+            }
+        }
+        else {
+            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+        }
+    }
+
+
     return (
         <View style={styles.container}>
             <MyStatusBar />

@@ -19,6 +19,7 @@ const medicineItem = [
         price: "₹50",
         percentage: "(+100%)",
         package: "25",
+
     },
     {
         id: 2,
@@ -27,6 +28,7 @@ const medicineItem = [
         price: "₹50",
         percentage: "(+100%)",
         package: "25",
+
     },
     {
         id: 3,

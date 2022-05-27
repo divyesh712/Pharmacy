@@ -5,7 +5,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { color } from '../utils/color';
 import fontSize from '../utils/fontsize';
 import fontFamily from '../utils/fontFamily';
-import { RemoveIcon, BagIcon,ArrowUpIcon } from '../constants/Imgconstants';
+import { RemoveIcon, BagIcon, ArrowUpIcon } from '../constants/Imgconstants';
 
 const ProductRenderComponent = ({
     data,
@@ -14,15 +14,22 @@ const ProductRenderComponent = ({
     comeFromOrders,
     OnArrowPress,
     OnProductPress,
+    Remove_item_to_cart
 }) => {
 
+    const OnRemovePress = (item) => {
+        if(comeFromBasket){
+            Remove_item_to_cart(item)
+        }
+      
+    }
     const ProductRenderItem = (item) => {
         return (
-            <TouchableOpacity onPress={OnProductPress} style={styles.ProductMainContainer}>
+            <TouchableOpacity onPress={() => { OnProductPress(item) }} style={styles.ProductMainContainer}>
                 <View style={styles.ProductFirstMainContainer}>
                     <View style={styles.ProductImgMainContainer}>
                         <Image
-                            source={item.image}
+                            source={item.media}
                             style={styles.ProductImgStyle}
                             resizeMode='contain'
                         />
@@ -30,24 +37,27 @@ const ProductRenderComponent = ({
                     <View style={styles.ProductTextMainContainer}>
                         <View style={styles.ProudctTitleMainContainer}>
                             <Text style={styles.ProductTitleFontStyle}>
-                                {item.title}
+                                {item.product_Name}
                             </Text>
                         </View>
                         <View style={styles.ProductSubTitleMAinContainer}>
                             <Text style={styles.ProductSubtitleFontStyle}>
-                                {item.subtitle}
+                                {item.Item_Code}
                             </Text>
                         </View>
                         <View style={styles.ProuctPricingMainContainer}>
                             <View style={styles.ProductPriceContainer}>
                                 <Text style={styles.ProductTotalPriceStyle}>
-                                    {item.totalPrice}
+                                    {item.MRP}
                                 </Text>
                             </View>
                             <View style={styles.ProductPriceContainer}>
                                 <Text style={styles.ProductOldPriceFontStyle}>
-                                    {item.oldPrice}
+                                    {item.Our_Price}
                                 </Text>
+                                <View style={styles.oldPricelineStyle}>
+
+                                </View>
                             </View>
                             <View style={styles.ProductPriceContainer}>
                                 <Text style={styles.DiscountFontStyle}>
@@ -65,26 +75,28 @@ const ProductRenderComponent = ({
                                     {item.date}
                                 </Text>
                             </View>
-                            <TouchableOpacity onPress={() => {OnArrowPress(item)}} style={styles.OrderBottomIConMAinContainer}>
+                            <TouchableOpacity onPress={() => { OnArrowPress(item) }} style={styles.OrderBottomIConMAinContainer}>
                                 <Image
-                                source={ArrowUpIcon}
-                                style = {styles.ArrowUpStyle}
+                                    source={ArrowUpIcon}
+                                    style={styles.ArrowUpStyle}
                                 />
                             </TouchableOpacity>
                         </View>
                         :
                         <View style={styles.ProductSecondMainContainer}>
-                            <View style={[styles.ProductBagMainContainer, { alignItems: comeFromBasket ? 'flex-end' : 'center' }]}>
-                                <Image
-                                    source={comeFromBasket ? RemoveIcon : BagIcon}
-                                    style={styles.ProductBagIconStyle}
-                                />
-                            </View>
-                            <View style={styles.ProductBottomTextContainer}>
-                                <Text style={styles.ProductBottomTextStyle}>
-                                    {comeFromBasket ? "Remove" : "Add to Bag"}
-                                </Text>
-                            </View>
+                            <TouchableOpacity style={{flexDirection : 'row'}} onPress={() => { OnRemovePress(item) }} >
+                                <View style={[styles.ProductBagMainContainer, { alignItems: comeFromBasket ? 'flex-end' : 'center' }]}>
+                                    <Image
+                                        source={comeFromBasket ? RemoveIcon : BagIcon}
+                                        style={styles.ProductBagIconStyle}
+                                    />
+                                </View>
+                                <View style={styles.ProductBottomTextContainer}>
+                                    <Text style={styles.ProductBottomTextStyle}>
+                                        {comeFromBasket ? "Remove" : "Add to Bag"}
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
                             <View style={styles.ProductCountMainContainer}>
                                 <View style={styles.CountIconMainContainer}>
                                     <Text style={styles.CountIconStyle}>
@@ -279,12 +291,19 @@ const styles = StyleSheet.create({
     OrderBottomIConMAinContainer: {
         height: hp("5%"),
         width: wp("15%"),
-        justifyContent : 'center'
+        justifyContent: 'center'
     },
-    ArrowUpStyle  :{
-        height : hp("3%"),
+    ArrowUpStyle: {
+        height: hp("3%"),
         width: hp("3%"),
-    }
+    },
+    oldPricelineStyle: {
+        height: hp("0.2%"),
+        width: wp("12%"),
+        backgroundColor: color.lineColor,
+        position: "absolute",
+        top: hp("1.3%")
+    },
 })
 
 export default ProductRenderComponent;

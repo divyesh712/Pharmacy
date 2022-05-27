@@ -9,6 +9,7 @@ import AllCategories from '../screen/AllCategories/AllCategories';
 import Checkout from '../screen/Checkout/Checkout';
 import Suppliments from '../screen/Suppliments/Suppliments';
 import Product from '../screen/Product/Product';
+import FindGeneric from '../screen/FindGeneric/FindGeneric';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,7 @@ const HomeStack = () => {
                 <Stack.Screen name="Checkout" component={Checkout} />
                 <Stack.Screen name="Suppliments" component={Suppliments} />
                 <Stack.Screen name="Product" component={Product} />
+                <Stack.Screen name="FindGeneric" component={FindGeneric} />
             </Stack.Navigator>
     )
 }

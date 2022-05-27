@@ -45,6 +45,9 @@ const MedicineRenderComponent = ({
                                 <Text style={styles.ProductOldPriceFontStyle}>
                                     {item.oldPrice}
                                 </Text>
+                                <View style = {styles.oldPricelineStyle }>
+
+                                </View>
                             </View>
                             <View style={styles.ProductPriceContainer}>
                                 <Text style={styles.DiscountFontStyle}>
@@ -164,6 +167,13 @@ const styles = StyleSheet.create({
         height: hp("3%"),
         width: wp("15%"),
         justifyContent: 'center',
+    },
+    oldPricelineStyle : {
+        height : hp("0.2%"),
+        width : wp("12%"),
+        backgroundColor : color.lineColor,
+        position : "absolute",
+        top : hp("1.2%")
     },
     ProductTotalPriceStyle: {
         fontSize: fontSize.lsmall,

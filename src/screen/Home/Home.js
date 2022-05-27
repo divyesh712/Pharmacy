@@ -1,13 +1,14 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, Modal, Image, TextInput, FlatList, TouchableOpacity, } from 'react-native';
+import React, { useRef, useState, useEffect } from 'react';
+import { View, Text, Modal, Image, TextInput, FlatList, TouchableOpacity, Dimensions, Platform } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from './styles';
 import MyStatusBar from '../../components/Statusbar';
-import { HeaderComponent, SearchComponent, UploadPrecriptionModal, TalkToPharmasiticModal, CategoriesComponents } from '../../components/sharedComponents';
+import { HeaderComponent, SearchComponent, UploadPrecriptionModal, TalkToPharmasiticModal, CategoriesComponents, ChangeNameComponent, EnterNameComponent } from '../../components/sharedComponents';
 import { color } from '../../utils/color';
 import ProductRenderComponent from '../../components/ProductRenderCompopnent';
 import { Category1, Category2, Category3, Category4, Category5, Category6 } from '../../constants/Imgconstants';
 import { ScrollView } from 'react-native-gesture-handler';
+import * as ImagePicker from 'expo-image-picker';
 
 const ProductIrems = [
     {
@@ -55,13 +56,26 @@ const Home = (props) => {
     const [uploadPresModal, setUploadPresModal] = useState(false);
     const [talkPharModal, setTalkPharModal] = useState(false);
     const [pharmNumber, setPharmNumber] = useState("+91  ");
+    const [EnterNameModel, setEnterNameModel] = useState(false);
+    const [image, setImage] = useState({});
 
     const OnDrawerPress = () => {
         props.navigation.openDrawer()
     }
 
+    const BasketItem = () => {
+        props.navigation.navigate('Bag')
+    }
+
+    const closeModal = () => {
+        setEnterNameModel(false)
+    }
     const OnUploadPresPress = () => {
         setUploadPresModal(true)
+    }
+
+    const OnEnterNamePress = () => {
+        setEnterNameModel(true)
     }
 
     const OnTalkPharmasticPress = () => {
@@ -79,7 +93,51 @@ const Home = (props) => {
     const OnAllCategoriesPrerss = () => {
         props.navigation.navigate("AllCategories");
     }
+    const FindGenericPress = () => {
+        props.navigation.navigate('FindGeneric');
+    }
+
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [2, 2],
+            quality: 1,
+        });
+
+        console.log('uri result here ', result);
+
+        if (!result.cancelled) {
+            setImage({ uri: result.uri });
+            setUploadPresModal(false);
+        }
+    };
+    const CameraOpen = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [2,2],
+          quality: 1,
+        });
     
+        console.log('uri result here ',result);
+    
+        if (!result.cancelled) {
+            setImage(result.uri);
+          setUploadPresModal(false);
+       
+        }
+      };
+      useEffect(() => {
+        if(image){
+        //   Prescription_Uploaded();
+        }
+        // console.log("URL IS=====>", image)
+    }, [image])
+
+
     return (
         <View style={styles.container}>
 
@@ -88,6 +146,7 @@ const Home = (props) => {
                 <HeaderComponent
                     headerText={"Hey Sherya"}
                     OnDrawerPress={OnDrawerPress}
+                    BasketItem={BasketItem}
                 />
 
                 <SearchComponent
@@ -96,14 +155,17 @@ const Home = (props) => {
                     placeholderText={"Search anything , we got all them"}
                 />
 
-                <View style={styles.BlankViewMainContainer}>
-                </View>
+                <TouchableOpacity onPress={OnEnterNamePress} style={styles.BlankViewMainContainer}>
+
+
+                </TouchableOpacity>
 
                 <View style={styles.categoriesMainContainer}>
                     <CategoriesComponents
                         categoryName={"Upload Prescription"}
                         categoryImg={Category1}
                         OnCategoryPress={OnUploadPresPress}
+
                     />
 
                     <CategoriesComponents
@@ -135,6 +197,8 @@ const Home = (props) => {
                     <CategoriesComponents
                         categoryName={"Find Generic"}
                         categoryImg={Category6}
+                        OnCategoryPress={FindGenericPress}
+
                     />
                 </View>
 
@@ -146,11 +210,15 @@ const Home = (props) => {
 
                 <ProductRenderComponent
                     data={ProductIrems}
+                // Remove_item_to_cart = {Remove_item_to_cart}
                 />
 
                 <UploadPrecriptionModal
                     setUploadPresModal={setUploadPresModal}
                     uploadPresModal={uploadPresModal}
+                    pickImage={pickImage}
+                    CameraOpen={CameraOpen}
+
                 />
 
                 <TalkToPharmasiticModal
@@ -160,7 +228,12 @@ const Home = (props) => {
                     pharmNumber={pharmNumber}
                 />
 
-               
+                <EnterNameComponent
+                    setEnterNameModel={setEnterNameModel}
+                    EnterNameModel={EnterNameModel}
+                    closeModal={closeModal}
+                />
+
             </ScrollView>
         </View>
     )
