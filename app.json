@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.raj1.Pharmacy"
+      "bundleIdentifier": "newindiaaps21"
     },
     "android": {
       "adaptiveIcon": {

@@ -143,6 +143,7 @@ const Bag = (props) => {
                 basketItemExist={true}
                 OnDrawerPress={() => { props.navigation.openDrawer() }}
 
+
             />
 
             <TitleTextCompnent
