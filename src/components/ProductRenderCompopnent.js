@@ -55,7 +55,9 @@ const ProductRenderComponent = ({
                                 <Text style={styles.ProductOldPriceFontStyle}>
                                     {item.Our_Price}
                                 </Text>
-                                <View style={styles.oldPricelineStyle}>
+
+
+                                <View style = {styles.oldPricelineStyle }>
 
                                 </View>
                             </View>
@@ -297,12 +299,14 @@ const styles = StyleSheet.create({
         height: hp("3%"),
         width: hp("3%"),
     },
-    oldPricelineStyle: {
-        height: hp("0.2%"),
-        width: wp("12%"),
-        backgroundColor: color.lineColor,
-        position: "absolute",
-        top: hp("1.3%")
+
+    oldPricelineStyle : {
+        height : hp("0.2%"),
+        width : wp("12%"),
+        backgroundColor : color.lineColor,
+        position : "absolute",
+        top : hp("1.3%")
+
     },
 })
 
