@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState,useEffect } from 'react';
 import { View, ScrollView, Text, Image, TextInput, FlatList, TouchableOpacity, } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from './styles';
@@ -9,6 +9,11 @@ import ProductRenderComponent from '../../components/ProductRenderCompopnent';
 import { color } from '../../utils/color';
 import { RadioButton } from 'react-native-paper';
 import { MapIcon, PrescriptionIcon } from '../../constants/Imgconstants';
+import AuthServices from '../../Api/authservices';
+import NetworkCheck from '../../utils/networkcheck';
+import MYDROP from '../../utils/Dropdown';
+import * as ImagePicker from 'expo-image-picker';
+// import RazorpayCheckout from 'react-native-razorpay';
 
 const ProductItems = [
     {
@@ -42,6 +47,12 @@ const Checkout = (props) => {
     const [city, setCity] = useState("");
     const [postalCode, setPostalCode] = useState("");
     const [uploadPresModal, setUploadPresModal] = useState(false);
+    const [cart_Id, setcart_Id] = useState('');
+    const [media, setmedia] = useState('');
+    const [isAppLoading, Setisapp_loding] = useState(false);
+    const [image, setImage] = useState("");
+    const [hasPermission, setHasPermission] = useState(null);
+    const [camera, setcamera] = useState("");
 
     const OnAddAddressPress = () => {
         setPage(1);
@@ -55,6 +66,128 @@ const Checkout = (props) => {
         setUploadPresModal(false);
         setPage(2);
     }
+
+    // const makepayment = () => {
+    //     var options = {
+    //       description: 'Credits towards consultation',
+    //       image: 'https://i.imgur.com/3g7nmJC.png',
+    //       currency: 'INR',
+    //       key: 'rzp_live_xjbwZJHoEAklgd', 
+    //       amount: '5000',
+    //       name: 'Test',
+    //       prefill: {
+    //         email: 'valueapps5@gmail.com',
+    //         contact: '9191919191',
+    //         name: 'Razorpay Software'
+    //       },
+    //       theme: {color: '#F37254'}
+    //     }
+       
+    //     RazorpayCheckout.open(options).then((data) => {
+    //       // handle success
+    //       alert(`Success: ${data.razorpay_payment_id}`);
+    //     }).catch((error) => {
+    //       // handle failure
+    //       alert(`Error: ${error.code} | ${error.description}`);
+    //     });
+    //     RazorpayCheckout.onExternalWalletSelection(data => {
+    //         alert(`External Wallet Selected: ${data.external_wallet} `);
+    //       });
+    //   }
+
+      const OnPaymentPress = () => {
+        if(page == 2){
+            // makepayment() 
+            
+        }
+        else{
+            OnUploadPresPress()
+        }
+      
+    }
+      
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [2,2],
+          quality: 1,
+        });
+    
+        console.log('uri result here ',result);
+    
+        if (!result.cancelled) {
+          setImage(result.uri);
+          setUploadPresModal(false);
+       
+        }
+      };
+      const CameraOpen = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [2,2],
+          quality: 1,
+        });
+    
+        console.log('uri result here ',result);
+    
+        if (!result.cancelled) {
+            setImage(result.uri);
+          setUploadPresModal(false);
+       
+        }
+      };
+
+      useEffect(() => {
+          if(image){
+            Prescription_Uploaded();
+          }
+          console.log("URL IS=====>", image)
+      }, [image])
+
+    const  Prescription_Uploaded = async (uri) => {
+
+        let Apidata = {};
+
+        const isConnected = await NetworkCheck.isNetworkAvailable()
+
+        if (isConnected) {
+
+            try {
+                Apidata = {
+                    "cart_Id":'1',
+                    "media":  {
+                        name: `filedocument.jpg`,
+                        uri: image,
+                        type: "*/*"
+                    },
+                }
+
+                const { data } = await AuthServices.Prescription_Uploaded(Apidata)
+                console.log("DATA IS====>", data)
+                if (data.status !== 200) {
+                    Setisapp_loding(false)
+                }
+                if (data.status == 200) {
+                    Setisapp_loding(false);
+                    setcart_Id(data.data);
+
+                }
+            }
+            catch (error) {
+
+                Setisapp_loding(false);
+                console.log(error)
+            }
+        }
+        else {
+            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+        }
+    }
+
     return (
         <View style={styles.container}>
             <MyStatusBar />
@@ -304,7 +437,8 @@ const Checkout = (props) => {
                         width: wp("100%"),
                         borderRadius: 0,
                     }}
-                    OnBtnPress={OnUploadPresPress}
+                    OnBtnPress={OnPaymentPress}
+                    
                 />
 
             </ScrollView>
@@ -313,6 +447,8 @@ const Checkout = (props) => {
                 setUploadPresModal={setUploadPresModal}
                 uploadPresModal={uploadPresModal}
                 OnGalleryPress={OnGalleryPress}
+                pickImage={pickImage}
+                CameraOpen={CameraOpen}
             />
         </View>
     )
