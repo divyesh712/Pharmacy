@@ -153,7 +153,7 @@ const Login = (props) => {
                             
                     }
 
-                    <TouchableOpacity onPress={OnVerifyNumberPress} style={styles.BtnMainContainer}>
+                    <TouchableOpacity onPress={CheckApiDireaction} style={styles.BtnMainContainer}>
                         <Text style={styles.BtnTextStyle}>
                             {page == 0 ? "Verify Number" : "Verify OTP"}
                         </Text>
