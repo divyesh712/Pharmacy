@@ -8,6 +8,10 @@ import { RemoveIcon, EditIcon } from '../../constants/Imgconstants';
 import { CustomBtn } from '../../components/CustomBtn';
 import { color } from '../../utils/color';
 import AddAddress from './AddAddress';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import AuthServices from '../../Api/authservices';
+import NetworkCheck from '../../utils/networkcheck';
+import MYDROP from '../../utils/Dropdown';
 
 const AddressItems = [
     {
@@ -29,10 +33,46 @@ const Address = (props) => {
     const [ landMark , setLandMark ] = useState("");
     const [ city , setCity ] = useState("");
     const [postalCode , setPostalCode ] = useState("");
+    const [address_Id , setaddress_Id ] = useState("");
+    const [isAppLoading, Setisapp_loding] = useState(false);
 
     const OnAddAddressPress = () => {
         setPage(page + 1);
     }
+    const Remove_Address = async (item) => {
+        // console.log('Item here =>>>>>>>>>', item)
+        let Apidata = {};
+
+        const isConnected = await NetworkCheck.isNetworkAvailable()
+
+        if (isConnected) {
+
+            try {
+                Apidata = {
+                    "address_Id": '1'
+                }
+
+                const { data } = await AuthServices.User_address_delete(Apidata)
+
+                if (data.status !== 200) {
+                    Setisapp_loding(false)
+                }
+                if (data.status == 200) {
+                    Setisapp_loding(false);
+
+                }
+            }
+            catch (error) {
+
+                Setisapp_loding(false);
+                console.log(error)
+            }
+        }
+        else {
+            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+        }
+    }
+
     const AddressRenderItem = (item) => {
         return (
             <View style={styles.AddressMainContainer}>
@@ -45,7 +85,7 @@ const Address = (props) => {
                     </Text>
                 </View>
                 <View style={styles.AddressBottomMainContainer}>
-                    <View style={styles.AddressRemoveMainContainer}>
+                    <TouchableOpacity onPress={Remove_Address} style={styles.AddressRemoveMainContainer}>
                         <Image
                             source={RemoveIcon}
                             style={styles.removeIconStyle}
@@ -53,7 +93,7 @@ const Address = (props) => {
                         <Text style={styles.removeTextStyle}>
                             Remove
                         </Text>
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.AddressEditMianContainer}>
                         <Image
                             source={EditIcon}

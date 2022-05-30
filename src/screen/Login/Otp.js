@@ -9,10 +9,16 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import OTPTextView from 'react-native-otp-textinput';
 
 export const OtpDetails = ({
-    OtpREF
+    OtpREF,
+    setOtp,
 }) => {
 
     const OnOtpTextChange = (e) => {
+        if(e.length == 4){
+            console.log("E iS ====>", e)
+            setOtp(e)
+        }
+       
     }
 
     return (       

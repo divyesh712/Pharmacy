@@ -1,10 +1,12 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState,useEffect } from 'react';
 import { View, Text, Image, FlatList, TouchableOpacity, } from 'react-native';
 import MyStatusBar from '../../components/Statusbar';
 import { HeaderComponent, TitleTextCompnent,SearchComponent } from '../../components/sharedComponents';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { GoogleMapIcon } from '../../constants/Imgconstants';
-
+import AuthServices from '../../Api/authservices';
+import NetworkCheck from '../../utils/networkcheck';
+import MYDROP from '../../utils/Dropdown';
 import styles from './styles';
 
 const StoresItems = [
@@ -25,27 +27,62 @@ const StoresItems = [
 const Stores = (props) => {
 
     const [searchTerm, setSearchTerm] = useState("");
-    
+    const [storelocation, setstorelocation] = useState([]);
+    const [isAppLoading, Setisapp_loding] = useState(false);
+
     const OnDrawerPress = () => {
         props.navigation.openDrawer()
+    }
+    useEffect(() => {
+        Store_Location_View_All()
+    }, [])
+    
+    const Store_Location_View_All = async () => {
+
+        const isConnected = await NetworkCheck.isNetworkAvailable()
+
+        if (isConnected) {
+          
+            try {
+
+                const { data } = await AuthServices.Store_Location_View_all()
+
+                if (data.status !== 200) {
+                    Setisapp_loding(false)
+                }
+                if (data.status == 200) {
+                    Setisapp_loding(false);
+                    setstorelocation(data.data);
+                }
+            }
+            catch (error) {
+
+                Setisapp_loding(false);
+                console.log(error)
+            }
+        }
+        else {
+            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+        }
     }
 
     const StoresRenderItem = (item) => {
         return(
             <View style = {styles.StoresMAinContainer}>
+                <View style = {styles.StoresContainer1}>
+                    <Text style = {styles.StoreTextStyle}>
+                        {item.store_Name}
+                    </Text>
+                </View>
                 <View style = {styles.StoresContainer}>
                     <Text style = {styles.StoreTextStyle}>
-                        {item.Address}
+                        {item.store_Address}
                     </Text>
                 </View>
                 <View style = {styles.StoreIconMainContainer}>
-                    <View style = {styles.StoreIconContainer}>
-                        <Image
-                        source={GoogleMapIcon}
-                        style = {styles.StoreIconStyle}
-                        resizeMode = "contain"
-                        />
-                    </View>
+                    <TouchableOpacity style = {styles.StoreIconContainer}>
+                      <Text>{item.location_Link}</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         )
@@ -77,7 +114,7 @@ const Stores = (props) => {
                 nestedScrollEnabled={true}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
-                data={StoresItems}
+                data={storelocation}
                 // contentContainerStyle={{ backgroundColor : 'pink'}}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => StoresRenderItem(item)}

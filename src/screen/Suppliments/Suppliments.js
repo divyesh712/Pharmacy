@@ -1,10 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState,useEffect } from 'react';
 import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity, } from 'react-native';
 import { HeaderComponent, SearchComponent, TitleTextCompnent } from '../../components/sharedComponents';
 import MyStatusBar from '../../components/Statusbar';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from './styles';
 import ProductRenderComponent from "../../components/ProductRenderCompopnent";
+import AuthServices from '../../Api/authservices';
+import NetworkCheck from '../../utils/networkcheck';
+import MYDROP from '../../utils/Dropdown';
 
 const ProductIrems = [
     {
@@ -48,10 +51,57 @@ const ProductIrems = [
 const Suppliments = (props) => {
 
     const [searchTerm, setSearchTerm] = useState("");
+    const [ViewBycategories, setViewByCategories] = useState([]);
+    const [isAppLoading, Setisapp_loding] = useState(false);
+    const [category_Id, Setcategory_Id] = useState('');
+    
 
     const OnProductPress = () => {
         props.navigation.navigate("Product");
     }
+
+    useEffect(() => {
+        View_ByCategories();
+
+    }, [])
+
+    useEffect(() => {
+        console.log("ALL View By Cat==========>", ViewBycategories)
+    }, [ViewBycategories])
+
+    const View_ByCategories = async () => {
+
+        let Apidata = {};
+        const isConnected = await NetworkCheck.isNetworkAvailable()
+
+        if (isConnected) {
+            Apidata = {
+                'category_Id':'1'
+            }
+            try {
+
+                const { data } = await AuthServices.View_By_Categories(Apidata)
+
+                if (data.status !== 200) {
+                    Setisapp_loding(false)
+                }
+                if (data.status == 200) {
+                    Setisapp_loding(false);
+                    setViewByCategories(data.data);
+
+                }
+            }
+            catch (error) {
+
+                Setisapp_loding(false);
+                console.log(error)
+            }
+        }
+        else {
+            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+        }
+    }
+
     return (
         <View style={styles.container}>
             <MyStatusBar />
@@ -76,7 +126,7 @@ const Suppliments = (props) => {
             />
 
             <ProductRenderComponent
-                data={ProductIrems}
+                data={ViewBycategories}
                 containerStyle = {{
                     marginTop : hp("2%")
                 }}

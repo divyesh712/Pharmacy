@@ -109,6 +109,7 @@ export const TitleTextCompnent = ({
     editable,
 }) => {
     return (
+        
         <View style={{ ...styles.TitleTextMainContainer, ...containerStyle }}>
             <Text style={styles.titleTextFontStyle}>
                 {title}
@@ -192,6 +193,8 @@ export const AddAddressTextInput = ({
 export const UploadPrecriptionModal = ({
     setUploadPresModal,
     uploadPresModal,
+    pickImage,
+    CameraOpen
 }) => {
     return (
         <Modal
@@ -218,11 +221,11 @@ export const UploadPrecriptionModal = ({
                                 resizeMode="contain"
                             />
                         </View>
-                        <View style={styles.PresOptionTextMainContainer}>
+                        <TouchableOpacity onPress={CameraOpen}style={styles.PresOptionTextMainContainer}>
                             <Text style={styles.PresOptionTextStyle}>
                                 Take a Photo
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
 
                     <View style={styles.PresOptionMainContainer}>
@@ -233,11 +236,11 @@ export const UploadPrecriptionModal = ({
                                 resizeMode="contain"
                             />
                         </View>
-                        <View style={styles.PresOptionTextMainContainer}>
+                        <TouchableOpacity onPress={pickImage} style={styles.PresOptionTextMainContainer}>
                             <Text style={styles.PresOptionTextStyle}>
                                 Select from gallery
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
 
                     <View style={styles.PresModalBottomMainContainer}>
@@ -488,6 +491,8 @@ export const CheckoutUploadPrecriptionModal = ({
     setUploadPresModal,
     uploadPresModal,
     OnGalleryPress,
+    pickImage,
+    CameraOpen,
 }) => {
     return (
         <Modal
@@ -517,28 +522,28 @@ export const CheckoutUploadPrecriptionModal = ({
                                 resizeMode="contain"
                             />
                         </View>
-                        <View style={styles.PresOptionTextMainContainer}>
+                        <TouchableOpacity onPress={CameraOpen} style={styles.PresOptionTextMainContainer}>
                             <Text style={styles.PresOptionTextStyle}>
                                 Take a Photo
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={OnGalleryPress}
                         style={styles.PresOptionMainContainer}>
-                        <View style={styles.PresOtionImgMainContainer}>
+                        <TouchableOpacity style={styles.PresOtionImgMainContainer}>
                             <Image
                                 source={GalleryIcon}
                                 style={styles.PresImgStyle}
                                 resizeMode="contain"
                             />
-                        </View>
-                        <View style={styles.PresOptionTextMainContainer}>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={pickImage} style={styles.PresOptionTextMainContainer}>
                             <Text style={styles.PresOptionTextStyle}>
                                 Select from gallery
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                     </TouchableOpacity>
 
 
@@ -890,7 +895,7 @@ const styles = StyleSheet.create({
         width: hp("4.4%")
     },
     PresOptionTextMainContainer: {
-        height: hp("5%"),
+        height: hp("5.6%"),
         width: wp("50%"),
         justifyContent: 'center',
     },
