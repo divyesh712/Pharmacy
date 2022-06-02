@@ -49,9 +49,6 @@ const PrescriptionRenderProduct = ({
                                 <Text style={styles.ProductOldPriceFontStyle}>
                                     {item.oldPrice}
                                 </Text>
-                                <View style = {styles.oldPricelineStyle }>
-
-                                </View>
                             </View>
                             <View style={styles.ProductPriceContainer}>
                                 <Text style={styles.DiscountFontStyle}>
@@ -165,19 +162,14 @@ const styles = StyleSheet.create({
         fontSize: fontSize.lsmall,
         fontFamily: fontFamily.REGULAR_FORT_FAMILY,
         color: color.secondfont,
+        textDecorationLine : "line-through",
     },
     DiscountFontStyle: {
         fontSize: fontSize.lsmall,
         fontFamily: fontFamily.REGULAR_FORT_FAMILY,
         color: color.highlighfont
     },
-    oldPricelineStyle : {
-        height : hp("0.2%"),
-        width : wp("12%"),
-        backgroundColor : color.lineColor,
-        position : "absolute",
-        top : hp("1.2%")
-    },
+
     dateMainContainer: {
         height: hp("10%"),
         width: wp("20%"),

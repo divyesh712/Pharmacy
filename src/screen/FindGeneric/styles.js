@@ -73,14 +73,7 @@ export default StyleSheet.create({
         fontSize: fontSize.msmall,
         color: color.secondfont,
         paddingHorizontal: wp("2%"),
-    },
-    oldPricelineStyle : {
-        height : hp("0.2%"),
-        width : wp("12%"),
-        backgroundColor : color.lineColor,
-        position : "absolute",
-        left: wp("2%"),
-        top : hp("1.2%")
+        textDecorationLine : "line-through",
     },
     alterPackStyle1: {
         fontFamily: fontFamily.BOLD_FONT_FAMILY,

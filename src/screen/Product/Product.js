@@ -11,42 +11,6 @@ import { color } from '../../utils/color';
 import { SliderBox } from "react-native-image-slider-box";
 import fontFamily from '../../utils/fontFamily';
 
-const medicineItem = [
-    {
-        id: 1,
-        image: Medicine3,
-        title: "Crocin Advance Tablet",
-        price: "₹50",
-        percentage: "(+100%)",
-        package: "25",
-
-    },
-    {
-        id: 2,
-        image: Medicine3,
-        title: "Crocin Advance Tablet",
-        price: "₹50",
-        percentage: "(+100%)",
-        package: "25",
-
-    },
-    {
-        id: 3,
-        image: Medicine3,
-        title: "Crocin Advance Tablet",
-        price: "₹50",
-        percentage: "(+100%)",
-        package: "25",
-    },
-    {
-        id: 4,
-        image: Medicine3,
-        title: "Crocin Advance Tablet",
-        price: "₹50",
-        percentage: "(+100%)",
-        package: "25",
-    },
-]
 const Product = (props) => {
 
     const [images, setImages] = useState([
@@ -55,15 +19,11 @@ const Product = (props) => {
         Product1,
         Product1,
     ])
-    const [alterModalVisible, setAlterModalVisible] = useState(false);
 
     const OnDrawerPress = () => {
         props.navigation.openDrawer()
     }
 
-    const OnAlternativesPress = () => {
-        setAlterModalVisible(true);
-    }
     return (
         <View style={styles.container}>
             <MyStatusBar />
@@ -182,12 +142,6 @@ const Product = (props) => {
                         The tablet is used as first line therapy for the treatment of fever, pain and inflammation according to the international guidelines and recommendations. It is used in moderate to severe pain relief, treatment of rheumatoid arthritis, osteoarthritis and in conditions such as headaches, body aches, tooth aches, menstrual pain and common cold. The tablet effectively relieves muscle stiffness, thereby improving muscle movement.
                     </Text>
                 </View>
-
-                <AlterModal
-                    modalVisible={alterModalVisible}
-                    setModalVisible={setAlterModalVisible}
-                    data={medicineItem}
-                />
             </ScrollView>
         </View>
     )

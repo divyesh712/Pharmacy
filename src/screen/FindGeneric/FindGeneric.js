@@ -104,14 +104,12 @@ const FindGeneric = () => {
                                         {item.price}
                                     </Text>
                                     <View>
-                                    <Text style={styles.alterPercentageStyle1}>
-                                        {item.percentage}
-                                    </Text>
-                                    <View style={styles.oldPricelineStyle}>
+                                        <Text style={styles.alterPercentageStyle1}>
+                                            {item.percentage}
+                                        </Text>
 
-</View>
                                     </View>
-                                   
+
                                     <Text style={styles.alterPackStyle1}>
                                         Pack of
                                     </Text>

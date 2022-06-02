@@ -113,10 +113,11 @@ export default StyleSheet.create({
     },
     desTitleMainContainer : {
         height : hp("4%"),
-        width  :wp("78%"),
+        width  :wp("79%"),
         alignSelf : 'center',
         justifyContent : 'center',
         marginTop : hp("1%"),
+    
     },
     desTitleTextStyle : {
         fontFamily : fontFamily.BOLD_FONT_FAMILY,

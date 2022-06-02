@@ -1,10 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState,useEffect } from 'react';
 import { View, Text, Image, FlatList, TextInput, StyleSheet, TouchableOpacity, } from 'react-native';
 import MyStatusBar from '../../components/Statusbar';
 import { HeaderComponent, TitleTextCompnent, SearchComponent } from '../../components/sharedComponents';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { ChevronRight } from '../../constants/Imgconstants';
 import styles from './styles';
+import AuthServices from '../../Api/authservices';
+import NetworkCheck from '../../utils/networkcheck';
+import MYDROP from '../../utils/Dropdown';
+
 
 const MedicationsItem = [
     {
@@ -69,21 +73,57 @@ const MedicationsItem = [
 const Medications = (props) => {
 
     const [searchTerm, setSearchTerm] = useState("");
-
+    const [allMedicineCategories, setAllMedicineCategories] = useState('');
+    const [isAppLoading, Setisapp_loding] = useState(false);
     const OnDrawerPress = () => {
         props.navigation.openDrawer()
     }
+    console.log('All MEdicine',allMedicineCategories)
+
 
     const OnViewMedicationPress = () => {
         props.navigation.navigate("Viewmedication")
     }
+    useEffect(() => {
+        Medicine_Category_View_All()
+    }, [])
+    
+    const Medicine_Category_View_All = async () => {
+
+        const isConnected = await NetworkCheck.isNetworkAvailable()
+
+        if (isConnected) {
+          
+            try {
+
+                const { data } = await AuthServices.Medicine_Category_View_All()
+
+                if (data.status !== 200) {
+                    Setisapp_loding(false)
+                }
+                if (data.status == 200) {
+                    Setisapp_loding(false);
+                    setAllMedicineCategories(data.data);
+                }
+            }
+            catch (error) {
+
+                Setisapp_loding(false);
+                console.log(error)
+            }
+        }
+        else {
+            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+        }
+    }
+
 
     const MedicationRenderItem = (item) => {
         return (
             <View style={styles.ListContainer}>
                 <View style={styles.ListTextMainContiner}>
                     <Text numberOfLines={1} style={styles.ListTextSyle}>
-                        {item.name}
+                        {item.medicine_Category_Name}
                     </Text>
                 </View>
                 <TouchableOpacity onPress={OnViewMedicationPress} style={styles.ListIconMAinContainer}>
@@ -125,7 +165,7 @@ const Medications = (props) => {
                     nestedScrollEnabled={true}
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
-                    data={MedicationsItem}
+                    data={allMedicineCategories}
                     contentContainerStyle={{ paddingBottom: hp("15%") }}
                     keyExtractor={item => item.id}
                     renderItem={({ item }) => MedicationRenderItem(item)}
