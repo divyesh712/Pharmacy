@@ -1,10 +1,15 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity, } from 'react-native';
+import React, { useRef, useState,useEffect } from 'react';
+import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity,ActivityIndicator } from 'react-native';
 import { HeaderComponent, SearchComponent, TitleTextCompnent } from '../../components/sharedComponents';
 import MyStatusBar from '../../components/Statusbar';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from './styles';
 import ProductRenderComponent from "../../components/ProductRenderCompopnent";
+import AuthServices from '../../Api/authservices';
+import NetworkCheck from '../../utils/networkcheck';
+import MYDROP from '../../utils/Dropdown';
+import { useSelector,useDispatch } from 'react-redux';
+import { ViewBycategoriesApi } from '../../redux/action';
 
 const ProductIrems = [
     {
@@ -47,11 +52,43 @@ const ProductIrems = [
 
 const Suppliments = (props) => {
 
+    const dispatch = useDispatch();
+    const state = useSelector(state => state.userReducers)
+    const loading = useSelector(state => state.userReducers.loading)
+
     const [searchTerm, setSearchTerm] = useState("");
+    const [ViewBycategories, setViewByCategories] = useState([]);
+    const [isAppLoading, Setisapp_loding] = useState(false);
+    const [category_Id, Setcategory_Id] = useState(props.route.params.category_Id);
 
     const OnProductPress = () => {
         props.navigation.navigate("Product");
     }
+
+    useEffect(() => {
+        View_ByCategories();
+
+    }, [])
+
+    const View_ByCategories = async () => {
+
+        const isConnected = await NetworkCheck.isNetworkAvailable()
+
+        if (isConnected) {
+            let data = { category_Id: category_Id, }
+            dispatch(ViewBycategoriesApi(data, res => {
+                if (res.status == 200) {
+                    setViewByCategories(res.data)
+                }
+
+            }))
+        }
+        else {
+            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+        }
+    }
+
+
     return (
         <View style={styles.container}>
             <MyStatusBar />
@@ -76,12 +113,18 @@ const Suppliments = (props) => {
             />
 
             <ProductRenderComponent
-                data={ProductIrems}
+                data={ViewBycategories}
                 containerStyle = {{
                     marginTop : hp("2%")
                 }}
                 OnProductPress = {OnProductPress}
             />
+              {
+                loading &&
+                <View style={styles.loadingStyle}>
+                    <ActivityIndicator size="large" color='#000000' />
+                </View>
+            }
         </View>
     )
 }

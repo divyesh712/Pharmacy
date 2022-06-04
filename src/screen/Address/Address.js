@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState,useEffect } from 'react';
 import { View, Text, Image, FlatList, } from 'react-native';
 import styles from './styles';
 import MyStatusBar from '../../components/Statusbar';
@@ -8,6 +8,10 @@ import { RemoveIcon, EditIcon } from '../../constants/Imgconstants';
 import { CustomBtn } from '../../components/CustomBtn';
 import { color } from '../../utils/color';
 import AddAddress from './AddAddress';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import AuthServices from '../../Api/authservices';
+import NetworkCheck from '../../utils/networkcheck';
+import MYDROP from '../../utils/Dropdown';
 
 const AddressItems = [
     {
@@ -29,23 +33,135 @@ const Address = (props) => {
     const [ landMark , setLandMark ] = useState("");
     const [ city , setCity ] = useState("");
     const [postalCode , setPostalCode ] = useState("");
+    const [address_Id , setaddress_Id ] = useState("");
+    const [isAppLoading, Setisapp_loding] = useState(false);
+    const [View_userId , setView_userId ] = useState([]);
+
 
     const OnAddAddressPress = () => {
         setPage(page + 1);
     }
+    useEffect(() => {
+        VIew_By_USERID()
+        if(page == 1){
+            PincodeApi();
+        }
+    }, [])
+    useEffect(() => {
+        console.log('View USer ID HEre =============> ',View_userId)
+    },[View_userId])
+    
+    const Remove_Address = async () => {
+        let Apidata = {};
+
+        const isConnected = await NetworkCheck.isNetworkAvailable()
+
+        if (isConnected) {
+            Apidata = {
+                "address_Id": '1'
+            }
+
+            try {
+
+                const { data } = await AuthServices.User_address_delete(Apidata)
+
+                if (data.status !== 200) {
+                    Setisapp_loding(false)
+                }
+                if (data.status == 200) {
+                    Setisapp_loding(false);
+
+                }
+            }
+            catch (error) {
+
+                Setisapp_loding(false);
+                console.log(error)
+            }
+        }
+        else {
+            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+        }
+    }
+    const VIew_By_USERID = async () => {
+
+        let Apidata = {};
+
+        const isConnected = await NetworkCheck.isNetworkAvailable()
+
+        if (isConnected) {
+            
+            Apidata = {
+                "user_Id":'2'
+            }
+
+            try {
+
+                const { data } = await AuthServices.View_By_userID(Apidata)
+               
+                if (data.status !== 200) {
+                    Setisapp_loding(false)
+                }
+                if (data.status == 200) {
+                    Setisapp_loding(false);
+                    setView_userId(data.data)
+
+                }
+            }
+            catch (error) {
+
+                Setisapp_loding(false);
+                console.log(error)
+            }
+        }
+        else {
+            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+        }
+    }
+
+    
+    const PincodeApi = async (uri) => {
+
+        const isConnected = await NetworkCheck.isNetworkAvailable()
+
+        if (isConnected) {
+
+            try {
+             
+                const { data } = await AuthServices.Pincode()
+                console.log("DATA IS====>", data)
+                if (data.status !== 200) {
+                    Setisapp_loding(false)
+                }
+                if (data.status == 200) {
+                    Setisapp_loding(false);
+                    setPostalCode(data.data[0].pincode);
+                }
+            }
+            catch (error) {
+
+                Setisapp_loding(false);
+                console.log(error)
+            }
+        }
+        else {
+            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+        }
+    }
+
     const AddressRenderItem = (item) => {
         return (
             <View style={styles.AddressMainContainer}>
                 <View style={styles.AddressTextMainContainer}>
                     <Text style={styles.AddressMainFontStyle}>
-                        {item.name}
+                    Nithya Deshpande
                     </Text>
                     <Text style={styles.AddressFontStyle}>
-                        {item.Address}
+                        {item.address}
                     </Text>
                 </View>
                 <View style={styles.AddressBottomMainContainer}>
-                    <View style={styles.AddressRemoveMainContainer}>
+                    <TouchableOpacity onPress={Remove_Address} style={styles.AddressRemoveMainContainer}>
                         <Image
                             source={RemoveIcon}
                             style={styles.removeIconStyle}
@@ -53,7 +169,7 @@ const Address = (props) => {
                         <Text style={styles.removeTextStyle}>
                             Remove
                         </Text>
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.AddressEditMianContainer}>
                         <Image
                             source={EditIcon}
@@ -102,7 +218,7 @@ const Address = (props) => {
                                 nestedScrollEnabled={true}
                                 showsVerticalScrollIndicator={false}
                                 showsHorizontalScrollIndicator={false}
-                                data={AddressItems}
+                                data={View_userId}
                                 // contentContainerStyle={{ backgroundColor : 'pink'}}
                                 keyExtractor={item => item.id}
                                 renderItem={({ item }) => AddressRenderItem(item)}

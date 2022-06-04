@@ -1,56 +1,59 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, Image, ScrollView, TextInput, StyleSheet, TouchableOpacity, } from 'react-native';
+import React, { useRef, useState, useEffect } from 'react';
+import { View, Text, Image, ScrollView, TextInput, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import MyStatusBar from '../../components/Statusbar';
 import { HeaderComponent, TitleTextCompnent, SearchComponent, AlterModal, MedicationModal } from '../../components/sharedComponents';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { ChevronRight,Medicine3, PrescriptionIcon, Medicine2, ArrowUpIcon } from '../../constants/Imgconstants';
+import { ChevronRight, Medicine3, PrescriptionIcon, Medicine2, ArrowUpIcon } from '../../constants/Imgconstants';
 import styles from './styles';
 import MedicineRenderComponent from '../../components/MedicineRenderComponent';
 import { CustomBtn } from '../../components/CustomBtn';
 import { color } from '../../utils/color';
 import { SliderBox } from "react-native-image-slider-box";
 import fontFamily from '../../utils/fontFamily';
-
+import NetworkCheck from '../../utils/networkcheck';
+import MYDROP from '../../utils/Dropdown';
+import { useDispatch, useSelector } from 'react-redux';
+import { Get_AlternatemedicineApi } from '../../redux/action';
 const medicineItem = [
     {
-        id : 1,
-        image : Medicine3,
-        title : "Crocin Advance Tablet",
+        id: 1,
+        image: Medicine3,
+        title: "Crocin Advance Tablet",
         title1: "Manufacture:",
         title2: "Micro Labs Ltd",
-        price : "₹50",
-        percentage : "(+100%)",
-        package : "25",
+        price: "₹50",
+        percentage: "(+100%)",
+        package: "25",
     },
     {
-        id : 2,
-        image : Medicine3,
-        title : "Crocin Advance Tablet",
+        id: 2,
+        image: Medicine3,
+        title: "Crocin Advance Tablet",
         title1: "Manufacture:",
         title2: "Micro Labs Ltd",
-        price : "₹50",
-        percentage : "(+100%)",
-        package : "25",
+        price: "₹50",
+        percentage: "(+100%)",
+        package: "25",
     },
     {
-        id : 3,
-        image : Medicine3,
-        title : "Crocin Advance Tablet",
+        id: 3,
+        image: Medicine3,
+        title: "Crocin Advance Tablet",
         title1: "Manufacture:",
         title2: "Micro Labs Ltd",
-        price : "₹50",
-        percentage : "(+100%)",
-        package : "25",
+        price: "₹50",
+        percentage: "(+100%)",
+        package: "25",
     },
     {
-        id : 4,
-        image : Medicine3,
-        title : "Crocin Advance Tablet",
+        id: 4,
+        image: Medicine3,
+        title: "Crocin Advance Tablet",
         title1: "Manufacture:",
         title2: "Micro Labs Ltd",
-        price : "₹50",
-        percentage : "(+100%)",
-        package : "25",
+        price: "₹50",
+        percentage: "(+100%)",
+        package: "25",
     },
 ]
 const Medicine = (props) => {
@@ -61,15 +64,44 @@ const Medicine = (props) => {
         Medicine2,
         Medicine2,
     ])
-    const [ alterModalVisible , setAlterModalVisible ] = useState(false);
-    
+
+    const dispatch = useDispatch();
+    const state = useSelector(state => state.userReducers);
+    const loading = useSelector(state => state.userReducers.loading)
+
+    const [alterModalVisible, setAlterModalVisible] = useState(false);
+    const [alterMedicine, setalterMedicine] = useState(false);
+    const [GetAlterData,setGetAlterData] = useState('')
+
     const OnDrawerPress = () => {
         props.navigation.openDrawer()
     }
 
     const OnAlternativesPress = () => {
         setAlterModalVisible(true);
+        GetAlternateMedicine();
     }
+
+    const GetAlternateMedicine = async () => {
+        const isConnected = await NetworkCheck.isNetworkAvailable()
+
+        if (isConnected) {
+            let data = { salt_Id: '1', medicine_Id:'1' }  
+            dispatch(Get_AlternatemedicineApi(data,res => {
+                alert('111111')
+                if(res.status == 200){
+                    setGetAlterData(res.data);
+                    console.log('RESSSSSSSSSSSSSSSSSSS',res)
+                }
+              
+            }))
+
+        }
+        else {
+            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+        }
+    }
+
     return (
         <View style={styles.container}>
             <MyStatusBar />
@@ -253,20 +285,26 @@ const Medicine = (props) => {
                 </View>
 
                 <View style={styles.questionMAinContainer}>
-                    <Text style = {[styles.qestionTextStyle , {fontFamily : fontFamily.BLACK_FONT_FAMILY}]}>
+                    <Text style={[styles.qestionTextStyle, { fontFamily: fontFamily.BLACK_FONT_FAMILY }]}>
                         Q1. What is the use of the Dolo 650MG tablet?
                     </Text>
-                    <Text style = {[styles.qestionTextStyle , {fontFamily : fontFamily.REGULAR_FORT_FAMILY}]}>
+                    <Text style={[styles.qestionTextStyle, { fontFamily: fontFamily.REGULAR_FORT_FAMILY }]}>
                         The tablet is used as first line therapy for the treatment of fever, pain and inflammation according to the international guidelines and recommendations. It is used in moderate to severe pain relief, treatment of rheumatoid arthritis, osteoarthritis and in conditions such as headaches, body aches, tooth aches, menstrual pain and common cold. The tablet effectively relieves muscle stiffness, thereby improving muscle movement.
                     </Text>
                 </View>
 
                 <AlterModal
-                modalVisible = {alterModalVisible}
-                setModalVisible = {setAlterModalVisible}
-                data = {medicineItem}
+                    modalVisible={alterModalVisible}
+                    setModalVisible={setAlterModalVisible}
+                    data={medicineItem}
                 />
             </ScrollView>
+            {
+                loading &&
+                <View style={styles.loadingStyle}>
+                    <ActivityIndicator size="large" color='#000000' />
+                </View>
+            }
         </View>
     )
 }

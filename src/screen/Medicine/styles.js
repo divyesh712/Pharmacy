@@ -113,10 +113,11 @@ export default StyleSheet.create({
     },
     desTitleMainContainer : {
         height : hp("4%"),
-        width  :wp("78%"),
+        width  :wp("79%"),
         alignSelf : 'center',
         justifyContent : 'center',
         marginTop : hp("1%"),
+    
     },
     desTitleTextStyle : {
         fontFamily : fontFamily.BOLD_FONT_FAMILY,
@@ -278,6 +279,16 @@ export default StyleSheet.create({
         fontSize  :fontSize.lsmall,
         color : color.mainfont,
         lineHeight  :hp("3.1%")
-    }
+    },
+    loadingStyle: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        left: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: "rgba(0, 0, 0, 0.3)"
+    },
 
 })
