@@ -83,6 +83,8 @@ const Medications = (props) => {
     const OnDrawerPress = () => {
         props.navigation.openDrawer()
     }
+    console.log('All MEdicine',allMedicineCategories)
+
 
     const OnViewMedicationPress = () => {
         props.navigation.navigate("Viewmedication")
