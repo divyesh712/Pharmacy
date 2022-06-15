@@ -150,7 +150,6 @@ const Address = (props) => {
     }
 
     const AddressRenderItem = (item) => {
-        console.log('$$$$$$$$$$$$$',item)
         return (
             <View style={styles.AddressMainContainer}>
                 <View style={styles.AddressTextMainContainer}>

@@ -107,6 +107,7 @@ const FindGeneric = () => {
                                         <Text style={styles.alterPercentageStyle1}>
                                             {item.percentage}
                                         </Text>
+
                                     </View>
 
                                     <Text style={styles.alterPackStyle1}>

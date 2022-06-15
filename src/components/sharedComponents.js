@@ -109,7 +109,7 @@ export const TitleTextCompnent = ({
     editable,
 }) => {
     return (
-        
+
         <View style={{ ...styles.TitleTextMainContainer, ...containerStyle }}>
             <Text style={styles.titleTextFontStyle}>
                 {title}
@@ -221,7 +221,7 @@ export const UploadPrecriptionModal = ({
                                 resizeMode="contain"
                             />
                         </View>
-                        <TouchableOpacity onPress={CameraOpen}style={styles.PresOptionTextMainContainer}>
+                        <TouchableOpacity onPress={CameraOpen} style={styles.PresOptionTextMainContainer}>
                             <Text style={styles.PresOptionTextStyle}>
                                 Take a Photo
                             </Text>
@@ -289,6 +289,7 @@ export const TalkToPharmasiticModal = ({
                         />
                     </View>
                     <CustomBtn
+               
                         btnText={"Call me"}
                         containerStyle={{ marginTop: hp("4%") }}
                     />
@@ -396,7 +397,7 @@ export const AlterModal = ({
                                 </Text>
                             </View>
                         </View>
-                       
+
                         <View style={styles.alterListSubtitleMainContainer}>
                             <Text style={styles.alterListPriceStyle}>
                                 {item.price}
@@ -746,14 +747,14 @@ const styles = StyleSheet.create({
         width: wp("25%"),
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: wp('1%'),  
+        marginLeft: wp('1%'),
 
     },
     CatTextStyle: {
         fontSize: fontSize.small,
         fontFamily: fontFamily.REGULAR_FORT_FAMILY,
         color: color.mainfont,
-        textAlign:"center",
+        textAlign: "center",
     },
     BasketItemCountMainContainer: {
         height: hp("3%"),
@@ -1201,7 +1202,7 @@ const styles = StyleSheet.create({
         height: hp("4%"),
         width: wp("26%"),
         justifyContent: 'center',
-       
+
     },
     malterListTitleTextStyle: {
         fontFamily: fontFamily.REGULAR_FORT_FAMILY,

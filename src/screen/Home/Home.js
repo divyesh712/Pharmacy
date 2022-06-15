@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, Text, Modal, Image, TextInput, FlatList, TouchableOpacity, Dimensions, Platform } from 'react-native';
+import { View, Text, Modal, Image, TextInput, FlatList, TouchableOpacity, Dimensions, Platform, } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from './styles';
 import MyStatusBar from '../../components/Statusbar';
@@ -58,6 +58,8 @@ const Home = (props) => {
     const [pharmNumber, setPharmNumber] = useState("+91  ");
     const [EnterNameModel, setEnterNameModel] = useState(false);
     const [image, setImage] = useState({});
+ 
+
 
     const OnDrawerPress = () => {
         props.navigation.openDrawer()
@@ -172,6 +174,7 @@ const Home = (props) => {
                         categoryName={"Talk to Pharmasitic"}
                         categoryImg={Category2}
                         OnCategoryPress={OnTalkPharmasticPress}
+                        
                     />
 
                     <CategoriesComponents
@@ -218,6 +221,7 @@ const Home = (props) => {
                     uploadPresModal={uploadPresModal}
                     pickImage={pickImage}
                     CameraOpen={CameraOpen}
+                 
 
                 />
 
@@ -235,6 +239,7 @@ const Home = (props) => {
                 />
 
             </ScrollView>
+   
         </View>
     )
 }

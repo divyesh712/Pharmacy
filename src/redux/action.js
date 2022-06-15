@@ -9,7 +9,11 @@ import {
     MEDICINE_CATEGORY_VIEW_ALL,
     GET_ALTERNATEMEDICINE,
     STORE_LOCATION_VIEW_ALL,
-    VIEW_BY_CATEGORIES
+    VIEW_BY_CATEGORIES,
+    VIEW_ALL_MEDICINE,
+    VIEW_BY_MEDICINE_ID,
+     CALLREQUEST
+
 } from '../constants/Constants';
 
 import Authservices from '../Api/authservices';
@@ -244,6 +248,89 @@ export const ViewBycategoriesApi = (params, callback) => {
             if(data.status == 200){
                 dispatch({
                     type: VIEW_BY_CATEGORIES,
+                    payload: data
+                })
+            }
+            else {
+                dispatch({
+                    type: API_ERROR,
+                    payload: error
+                })
+            }
+        } catch (error) {
+            dispatch({
+                type: API_ERROR,
+                payload: error
+            })
+            console.log('error', error)
+        }
+    }
+}
+
+export const ViewAllMedicineApi = (params, callback) => {
+    return async(dispatch) => {
+        dispatch({type : SET_LOADER})
+        try {
+            const {data} = await Authservices.All_Medicine(params)
+            callback(data);
+            if(data.status == 200){
+                dispatch({
+                    type: VIEW_ALL_MEDICINE,
+                    payload: data
+                })
+            }
+            else {
+                dispatch({
+                    type: API_ERROR,
+                    payload: error
+                })
+            }
+        } catch (error) {
+            dispatch({
+                type: API_ERROR,
+                payload: error
+            })
+            console.log('error', error)
+        }
+    }
+}
+
+export const View_Medicine_Api = (params,callback) => {
+    return async(dispatch) => {
+        dispatch({type : SET_LOADER})
+        try {
+            const {data} = await Authservices.View_By_Medicine_id(params)
+            callback(data);
+            if(data.status == 200){
+                dispatch({
+                    type: VIEW_BY_MEDICINE_ID,
+                    payload: data
+                })
+            }
+            else {
+                dispatch({
+                    type: API_ERROR,
+                    payload: error
+                })
+            }
+        } catch (error) {
+            dispatch({
+                type: API_ERROR,
+                payload: error
+            })
+            console.log('error', error)
+        }
+    }
+}
+export const Call_Request_Api = (params,callback) => {
+    return async(dispatch) => {
+        dispatch({type : SET_LOADER})
+        try {
+            const {data} = await Authservices.Call_Request(params)
+            callback(data);
+            if(data.status == 200){
+                dispatch({
+                    type: CALLREQUEST,
                     payload: data
                 })
             }

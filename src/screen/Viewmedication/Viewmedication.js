@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity, } from 'react-native';
+import React, { useRef, useState,useEffect } from 'react';
+import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity,ActivityIndicator } from 'react-native';
 import MyStatusBar from '../../components/Statusbar';
 import { HeaderComponent, TitleTextCompnent, SearchComponent, MedicationModal } from '../../components/sharedComponents';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -9,6 +9,11 @@ import MedicineRenderComponent from '../../components/MedicineRenderComponent';
 import { CustomBtn } from '../../components/CustomBtn';
 import { color } from '../../utils/color';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import NetworkCheck from '../../utils/networkcheck';
+import MYDROP from '../../utils/Dropdown';
+import { useDispatch, useSelector } from 'react-redux';
+import { ViewAllMedicineApi } from '../../redux/action';
+import { useIsFocused } from "@react-navigation/native";
 
 const MedicineItem = [
     {
@@ -46,11 +51,48 @@ const MedicineItem = [
     },
 ]
 const Viewmedication = (props) => {
+    const isFocused = useIsFocused();
 
     const [searchTerm, setSearchTerm] = useState("");
     const [ modalVisible , setModalVisible ] = useState(false);
     const [ drugName , setDrugName ] = useState("");
     const [ number , setNumber ] = useState("");
+    const [ Medicine , SetAllMedicine ] = useState("");
+
+    const dispatch = useDispatch();
+    const state = useSelector(state => state.userReducers);
+    const loading = useSelector(state => state.userReducers.loading)
+
+ 
+useEffect(() => {
+    if (isFocused) {
+        View_All_Medicine()
+    }
+  }, [props, isFocused]);
+
+
+const OnMedicinePress = (item) => {
+    props.navigation.navigate("Medicine",{medicine_Id:item.medicine_Id})
+
+}
+
+const View_All_Medicine = async () => {
+    const isConnected = await NetworkCheck.isNetworkAvailable()
+
+    if (isConnected) {
+        let data = {}  
+        dispatch(ViewAllMedicineApi(data,res => {
+            if(res.status == 200){
+                SetAllMedicine(res.data);
+            }
+          
+        }))
+
+    }
+    else {
+        MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+    }
+}
 
     const OnDrawerPress = () => {
         props.navigation.openDrawer()
@@ -60,9 +102,6 @@ const Viewmedication = (props) => {
         setModalVisible(true)
     }
 
-    const OnMedicinePress = () => {
-        props.navigation.navigate("Medicine")
-    }
 
     return (
         <View style={styles.container}>
@@ -99,8 +138,9 @@ const Viewmedication = (props) => {
             </View>
 
             <MedicineRenderComponent
-                data={MedicineItem}
+                data={Medicine}
                 OnMedicinePress = {OnMedicinePress}
+                
             />
 
             <CustomBtn
@@ -126,6 +166,12 @@ const Viewmedication = (props) => {
             number = {number}
             />
             </KeyboardAwareScrollView>
+            {
+                loading &&
+                <View style={styles.loadingStyle}>
+                    <ActivityIndicator size="large" color='#000000' />
+                </View>
+            }
         </View>
     )
 }

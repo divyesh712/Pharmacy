@@ -9,7 +9,10 @@ import {
     MEDICINE_CATEGORY_VIEW_ALL,
     GET_ALTERNATEMEDICINE,
     STORE_LOCATION_VIEW_ALL,
-    VIEW_BY_CATEGORIES
+    VIEW_BY_CATEGORIES,
+    VIEW_ALL_MEDICINE,
+    VIEW_BY_MEDICINE_ID,
+    CALLREQUEST,
 } from "../constants/Constants";
 
 const initialState = {
@@ -22,7 +25,8 @@ const initialState = {
     getAlternateMedicine: {},
     StoreLocation: '',
     viewByCategory: '',
-
+    All_Medicine: '',
+    Medicine_category: '',
 
 
 }
@@ -54,13 +58,13 @@ function userReducers(state = initialState, action) {
         case ALL_CATEGORIES:
             return {
                 ...state,
-                allCategories: action.payload,
+                allCategories: action.payload.data,
                 loading: false,
             }
         case VIEW_CART_BY_ID:
             return {
                 ...state,
-                cart_Id: action.payload,
+                cart_Id: action.payload.data,
                 loading: false,
             }
         case REMOVE_ITEM_TO_CART:
@@ -72,7 +76,7 @@ function userReducers(state = initialState, action) {
         case MEDICINE_CATEGORY_VIEW_ALL:
             return {
                 ...state,
-                Medicine_Category_View_All: action.payload,
+                Medicine_Category_View_All: action.payload.data,
                 loading: false
             }
         case GET_ALTERNATEMEDICINE:
@@ -84,15 +88,33 @@ function userReducers(state = initialState, action) {
         case STORE_LOCATION_VIEW_ALL:
             return {
                 ...state,
-                StoreLocation: action.payload,
+                StoreLocation: action.payload.data,
                 loading: false
             }
         case VIEW_BY_CATEGORIES:
             return {
-                viewByCategory: action.payload,
+                ...state,
+                viewByCategory: action.payload.data,
                 loading: false
             }
-
+        case VIEW_ALL_MEDICINE:
+            return {
+                ...state,
+                All_Medicine: action.payload.data,
+                loading: false
+            }
+        case VIEW_BY_MEDICINE_ID:
+            return {
+                ...state,
+                Medicine_category: action.payload.data,
+                loading: false
+            }
+            case CALLREQUEST:
+            return {
+                ...state,
+                CallRequest: action.payload.data,
+                loading: false
+            }
 
         default:
             return state;

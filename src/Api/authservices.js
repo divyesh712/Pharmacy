@@ -6,8 +6,8 @@ import {
     VIEW_BY_CATEGORIES,
     MEDICINE_CATEGORY_VIEW_ALL,
     VIEW_BY_PRODUCT,
-    VIEW_ALL_MEDICINE,
-    VIEW_BY_CATEGORY,
+    VIEW_ALL_MEDICINE_PRODUCT,
+    VIEW_BY_MEDICINE_ID,
     PRODUCT_VIEW_BY_MEDICINEID,
     PRODUCT_VIEW_ALL_MEDICINE,
     GET_ALTERNATEMEDICINE,
@@ -19,7 +19,9 @@ import {
     STORE_LOCATION_VIEW_ALL,
     USER_ADDRESS_DELETE,
     USER_VIEW_BY_ID,
-    PINCODE
+    PINCODE,
+    VIEW_ALL_MEDICINE,
+    CALLREQUEST
 
 } from "../Api/apiconstants";
 
@@ -68,8 +70,6 @@ const authservices = {
                 'Content-Type': `application/json`,
             },
         };
-        console.log(VIEW_BY_CATEGORIES)
-        console.log(bodyFormData)
         const data = await axios.post(`${VIEW_BY_CATEGORIES}`, bodyFormData, config);
         return data;
     },
@@ -98,16 +98,18 @@ const authservices = {
                 'Content-Type': `application/json`,
             },
         };
-        const data = await axios.post(`${VIEW_ALL_MEDICINE}`, bodyFormData, config);
+        const data = await axios.post(`${VIEW_ALL_MEDICINE_PRODUCT}`, bodyFormData, config);
         return data;
     },
-    View_By_Categorie: async (bodyFormData) => {
+    View_By_Medicine_id: async (bodyFormData) => {
         const config = {
             headers: {
                 'Content-Type': `application/json`,
             },
         };
-        const data = await axios.post(`${VIEW_BY_CATEGORY}`, bodyFormData, config);
+        console.log(VIEW_BY_MEDICINE_ID)
+        console.log(bodyFormData)
+        const data = await axios.post(`${VIEW_BY_MEDICINE_ID}`, bodyFormData, config);
         return data;
     },
     Product_View_By_Medicine: async (bodyFormData) => {
@@ -235,6 +237,25 @@ const authservices = {
         };
         console.log(PINCODE)
         const data = await axios.post(`${PINCODE}`, bodyFormData, config);
+        return data;
+    },
+   All_Medicine: async (bodyFormData) => {
+        const config = {
+            headers: {
+                'Content-Type': `application/json`,
+            },
+        };
+        const data = await axios.post(`${VIEW_ALL_MEDICINE}`, bodyFormData, config);
+        return data;
+    },
+    Call_Request: async (bodyFormData) => {
+        const config = {
+            headers: {
+                'Content-Type': `application/json`,
+            },
+        };
+        console.log(CALLREQUEST)
+        const data = await axios.post(`${CALLREQUEST}`, bodyFormData, config);
         return data;
     },
 

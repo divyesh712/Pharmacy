@@ -439,6 +439,7 @@ const Checkout = (props) => {
                         borderRadius: 0,
                     }}
                     OnBtnPress={OnPaymentPress}
+
                 />
 
             </ScrollView>

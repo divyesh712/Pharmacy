@@ -11,15 +11,16 @@ const MedicineRenderComponent = ({
     data,
     containerStyle,
     OnMedicinePress,
+    
 }) => {
 
     const MedicineRenderItem = (item) => {
         return (
-            <TouchableOpacity onPress={OnMedicinePress} style={styles.MainContainer}>
+            <TouchableOpacity onPress={OnMedicinePress(item)} style={styles.MainContainer}>
                 <View style={styles.firstContainer}>
                     <View style={styles.ImgMainContainer}>
                         <Image
-                            source={item.image}
+                            source={item.media}
                             style={styles.ImgStyle}
                             resizeMode="contain"
                         />
@@ -27,23 +28,23 @@ const MedicineRenderComponent = ({
                     <View style={styles.TextMainContainer}>
                         <View style={styles.titleTextMainContainer}>
                             <Text style={styles.titleFontStyle}>
-                                {item.name}
+                                {item.medicine_Name}
                             </Text>
                         </View>
                         <View style={styles.subtitleMainContainer}>
                             <Text style={styles.subtitleFontStyle}>
-                                {item.subtitle}
+                                {item.salt_Name}
                             </Text>
                         </View>
                         <View style={styles.ProuctPricingMainContainer}>
                             <View style={styles.ProductPriceContainer}>
                                 <Text style={styles.ProductTotalPriceStyle}>
-                                    {item.totalPrice}
+                                    {item.MRP}
                                 </Text>
                             </View>
                             <View style={styles.ProductPriceContainer}>
                                 <Text style={styles.ProductOldPriceFontStyle}>
-                                    {item.oldPrice}
+                                    {item.Our_Price}
                                 </Text>
                             </View>
                             <View style={styles.ProductPriceContainer}>
@@ -55,7 +56,7 @@ const MedicineRenderComponent = ({
                     </View>
                     <View style={styles.tabletMainContainer}>
                         <Text style={styles.tabletTextStyle}>
-                            {item.total} Tablets
+                            {item.pack_qty_units} Tablets
                         </Text>
                     </View>
                 </View>
