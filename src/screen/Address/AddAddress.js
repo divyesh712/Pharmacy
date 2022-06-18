@@ -23,8 +23,6 @@ const AddAddress = ({
 }) => {
     const [isAppLoading, Setisapp_loding] = useState(false);
 
-  console.log("==========================>", postalCode)
-
     return (
         <View>
             <AddAddressTextInput

@@ -13,7 +13,7 @@ import fontFamily from '../../utils/fontFamily';
 import NetworkCheck from '../../utils/networkcheck';
 import MYDROP from '../../utils/Dropdown';
 import { useDispatch, useSelector } from 'react-redux';
-import { Get_AlternatemedicineApi } from '../../redux/action';
+import { Get_AlternatemedicineApi,View_Medicine_Api } from '../../redux/action';
 const medicineItem = [
     {
         id: 1,
@@ -72,6 +72,12 @@ const Medicine = (props) => {
     const [alterModalVisible, setAlterModalVisible] = useState(false);
     const [alterMedicine, setalterMedicine] = useState(false);
     const [GetAlterData,setGetAlterData] = useState('')
+    const [MedicineCat,SetMedicineCat] = useState ('')
+    const [MedicineId,SetMedicineId] = useState (props.route.params.medicine_Id)
+    
+    useEffect(() => {
+            Medicine_category();
+    }, [])
 
     const OnDrawerPress = () => {
         props.navigation.openDrawer()
@@ -82,16 +88,15 @@ const Medicine = (props) => {
         GetAlternateMedicine();
     }
 
+
     const GetAlternateMedicine = async () => {
         const isConnected = await NetworkCheck.isNetworkAvailable()
 
         if (isConnected) {
             let data = { salt_Id: '1', medicine_Id:'1' }  
             dispatch(Get_AlternatemedicineApi(data,res => {
-                alert('111111')
                 if(res.status == 200){
                     setGetAlterData(res.data);
-                    console.log('RESSSSSSSSSSSSSSSSSSS',res)
                 }
               
             }))
@@ -101,6 +106,25 @@ const Medicine = (props) => {
             MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
         }
     }
+
+    const Medicine_category = async () => {
+        const isConnected = await NetworkCheck.isNetworkAvailable()
+
+        if (isConnected) {
+            let data = {medicine_Id :MedicineId}  
+            dispatch(View_Medicine_Api(data,res => {
+                if(res.status == 200){
+                    SetMedicineCat(res.data[0]);
+                }
+              
+            }))
+
+        }
+        else {
+            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+        }
+    }
+
 
     return (
         <View style={styles.container}>
@@ -150,7 +174,7 @@ const Medicine = (props) => {
 
                 <View style={styles.MediTextContainer}>
                     <Text style={styles.MediFontStyle}>
-                        Dolo 650 Tablet
+                    {MedicineCat.medicine_Name}
                     </Text>
                 </View>
 
@@ -173,7 +197,7 @@ const Medicine = (props) => {
                         }}
                         dotStyle={styles.sliderDotStyle}
                         ImageComponentStyle={styles.sliderImgStyle}
-                        imageLoadingColor="#2196F3"
+                        // imageLoadingColor="#000000"
                     />
                 </View>
 
@@ -193,7 +217,7 @@ const Medicine = (props) => {
                 <View style={styles.mrpMainContainier}>
                     <View style={styles.mrpTextContainer}>
                         <Text style={styles.mrpTextStyle}>
-                            MRP  ₹49.99
+                            MRP  ₹{MedicineCat.MRP}
                         </Text>
                     </View>
                     <View style={styles.mrpTextContainer}>
@@ -205,7 +229,7 @@ const Medicine = (props) => {
 
                 <View style={styles.priceMainContainer}>
                     <Text style={styles.MediFontStyle}>
-                        Our Price ₹25
+                        Our Price ₹{MedicineCat.Our_Price}
                     </Text>
                 </View>
 
@@ -215,7 +239,7 @@ const Medicine = (props) => {
                             Manufacture:
                         </Text>
                         <Text style={[styles.ManuTextStyle, { color: color.mainfont }]}>
-                            {" "} Micro Labs Ltd
+                            {" "} {MedicineCat.brand_Name}
                         </Text>
                     </View>
 
@@ -224,7 +248,7 @@ const Medicine = (props) => {
                             1 Strip:
                         </Text>
                         <Text style={[styles.ManuTextStyle, { color: color.mainfont }]}>
-                            {" "} 25 Tablet
+                            {" "} {MedicineCat.pack_qty_units}
                         </Text>
                     </View>
 
@@ -233,7 +257,7 @@ const Medicine = (props) => {
                             Salt Composition:
                         </Text>
                         <Text style={[styles.ManuTextStyle, { color: color.mainfont }]}>
-                            {" "} Paracetamol (650mg)
+                            {" "} {MedicineCat.salt_Name}
                         </Text>
                     </View>
                 </View>
@@ -289,7 +313,8 @@ const Medicine = (props) => {
                         Q1. What is the use of the Dolo 650MG tablet?
                     </Text>
                     <Text style={[styles.qestionTextStyle, { fontFamily: fontFamily.REGULAR_FORT_FAMILY }]}>
-                        The tablet is used as first line therapy for the treatment of fever, pain and inflammation according to the international guidelines and recommendations. It is used in moderate to severe pain relief, treatment of rheumatoid arthritis, osteoarthritis and in conditions such as headaches, body aches, tooth aches, menstrual pain and common cold. The tablet effectively relieves muscle stiffness, thereby improving muscle movement.
+                       {MedicineCat.medicine_Description}
+                        {/* The tablet is used as first line therapy for the treatment of fever, pain and inflammation according to the international guidelines and recommendations. It is used in moderate to severe pain relief, treatment of rheumatoid arthritis, osteoarthritis and in conditions such as headaches, body aches, tooth aches, menstrual pain and common cold. The tablet effectively relieves muscle stiffness, thereby improving muscle movement. */}
                     </Text>
                 </View>
 

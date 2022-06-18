@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, ScrollView, Text, Image, TextInput, FlatList, TouchableOpacity, } from 'react-native';
+import { View, ScrollView, Text, Image, TextInput, FlatList, TouchableOpacity, ActivityIndicator} from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from './styles';
 import MyStatusBar from '../../components/Statusbar';
@@ -10,10 +10,12 @@ import { color } from '../../utils/color';
 import { RadioButton } from 'react-native-paper';
 import { MapIcon, PrescriptionIcon } from '../../constants/Imgconstants';
 import AuthServices from '../../Api/authservices';
-import NetworkCheck from '../../utils/networkcheck';
-import MYDROP from '../../utils/Dropdown';
 import * as ImagePicker from 'expo-image-picker';
 import RazorpayCheckout from 'react-native-razorpay';
+import { Click_Here_Offer } from '../../redux/action';
+import { useDispatch, useSelector } from 'react-redux';
+import NetworkCheck from '../../utils/networkcheck';
+import MYDROP from '../../utils/Dropdown';
 
 const ProductItems = [
     {
@@ -54,6 +56,11 @@ const Checkout = (props) => {
     const [hasPermission, setHasPermission] = useState(null);
     const [camera, setcamera] = useState("");
     const [amount, setamount] = useState("100");
+
+    const dispatch = useDispatch();
+    const state = useSelector(state => state.userReducers);
+    const loading = useSelector(state => state.userReducers.loading);
+
     const OnAddAddressPress = () => {
         setPage(1);
     }
@@ -82,7 +89,7 @@ const Checkout = (props) => {
             },
             theme: { color: '#F37254' }
         }
-        
+
         RazorpayCheckout.open(options).then((data) => {
             // handle success
             alert(`Success: ${data.razorpay_payment_id}`);
@@ -97,7 +104,7 @@ const Checkout = (props) => {
 
     const OnPaymentPress = () => {
         if (page == 2) {
-            makepayment() 
+            makepayment()
 
         }
         else {
@@ -166,7 +173,7 @@ const Checkout = (props) => {
             }
 
             try {
-             
+
                 const { data } = await AuthServices.Prescription_Uploaded(Apidata)
                 console.log("DATA IS====>", data)
                 if (data.status !== 200) {
@@ -183,6 +190,24 @@ const Checkout = (props) => {
                 Setisapp_loding(false);
                 console.log(error)
             }
+        }
+        else {
+            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+        }
+    }
+
+    const ClickHereOffers = async () => {
+
+        const isConnected = await NetworkCheck.isNetworkAvailable()
+
+        if (isConnected) {
+            let data = { offer_Id: '1' }  
+            dispatch(Click_Here_Offer(data,res => {
+                if (res.status == 200) {
+                    // setAllCategories(res.data)
+                    // console.log('ALL CATEGORY HERE DATA ',res)
+                }
+            }))
         }
         else {
             MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
@@ -236,8 +261,9 @@ const Checkout = (props) => {
 
                 <CustomBtn
                     btnText={"Click here for offers"}
+                    OnBtnPress = {ClickHereOffers}
                     containerStyle={{
-                        marginTop: hp("3%"),
+                        marginTop: hp("3%"),   
                     }}
                 />
 
@@ -439,6 +465,7 @@ const Checkout = (props) => {
                         borderRadius: 0,
                     }}
                     OnBtnPress={OnPaymentPress}
+
                 />
 
             </ScrollView>
@@ -450,7 +477,14 @@ const Checkout = (props) => {
                 pickImage={pickImage}
                 CameraOpen={CameraOpen}
             />
+            {
+                loading &&
+                <View style={styles.loadingStyle}>
+                    <ActivityIndicator size="large" color='#000000' />
+                </View>
+            }
         </View>
+
     )
 }
 

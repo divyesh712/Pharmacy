@@ -10,6 +10,7 @@ import NetworkCheck from '../../utils/networkcheck';
 import MYDROP from '../../utils/Dropdown';
 import { useSelector,useDispatch } from 'react-redux';
 import { ViewBycategoriesApi } from '../../redux/action';
+import { useIsFocused } from "@react-navigation/native";
 
 const ProductIrems = [
     {
@@ -55,6 +56,7 @@ const Suppliments = (props) => {
     const dispatch = useDispatch();
     const state = useSelector(state => state.userReducers)
     const loading = useSelector(state => state.userReducers.loading)
+    const isFocused = useIsFocused();
 
     const [searchTerm, setSearchTerm] = useState("");
     const [ViewBycategories, setViewByCategories] = useState([]);
@@ -64,11 +66,11 @@ const Suppliments = (props) => {
     const OnProductPress = () => {
         props.navigation.navigate("Product");
     }
-
     useEffect(() => {
-        View_ByCategories();
-
-    }, [])
+        if (isFocused) {
+            View_ByCategories()
+        }
+      }, [props, isFocused]);
 
     const View_ByCategories = async () => {
 
@@ -79,6 +81,7 @@ const Suppliments = (props) => {
             dispatch(ViewBycategoriesApi(data, res => {
                 if (res.status == 200) {
                     setViewByCategories(res.data)
+
                 }
 
             }))
@@ -87,6 +90,7 @@ const Suppliments = (props) => {
             MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
         }
     }
+
 
     return (
         <View style={styles.container}>

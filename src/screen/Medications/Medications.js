@@ -1,5 +1,5 @@
-import React, { useRef, useState,useEffect } from 'react';
-import { View, Text, Image, FlatList, TextInput, StyleSheet, TouchableOpacity,ActivityIndicator } from 'react-native';
+import React, { useRef, useState, useEffect } from 'react';
+import { View, Text, Image, FlatList, TextInput, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import MyStatusBar from '../../components/Statusbar';
 import { HeaderComponent, TitleTextCompnent, SearchComponent } from '../../components/sharedComponents';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -74,17 +74,14 @@ const MedicationsItem = [
 const Medications = (props) => {
 
     const dispatch = useDispatch();
-    const state = useSelector(state =>state.userReducers);
+    const state = useSelector(state => state.userReducers);
     const loading = useSelector(state => state.userReducers.loading);
-
     const [searchTerm, setSearchTerm] = useState("");
     const [allMedicineCategories, setAllMedicineCategories] = useState([]);
 
     const OnDrawerPress = () => {
         props.navigation.openDrawer()
     }
-    console.log('All MEdicine',allMedicineCategories)
-
 
     const OnViewMedicationPress = () => {
         props.navigation.navigate("Viewmedication")
@@ -92,16 +89,16 @@ const Medications = (props) => {
     useEffect(() => {
         Medicine_Category_View_All()
     }, [])
-    
+
     const Medicine_Category_View_All = async () => {
 
         const isConnected = await NetworkCheck.isNetworkAvailable()
-        if(isConnected){
+        if (isConnected) {
             dispatch(Medicine_Category_View_AllApi(res => {
-                if (res.status == 200){
+                if (res.status == 200) {
                     setAllMedicineCategories(res.data)
                 }
-               
+
             }))
 
         }
@@ -167,7 +164,7 @@ const Medications = (props) => {
             {
                 loading &&
                 <View style={styles.loadingStyle}>
-                    <ActivityIndicator size="large" color='#000000'/>
+                    <ActivityIndicator size="large" color='#000000' />
                 </View>
             }
         </View>

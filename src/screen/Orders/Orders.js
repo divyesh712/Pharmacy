@@ -15,7 +15,7 @@ const OrderItem = [
         oldPrice: "₹2999",
         discount: "50%",
         image: require("../../assets/image/Product1.png"),
-        date : "Bought on April 25, 2022",
+        date: "Bought on April 25, 2022",
     },
     {
         id: 2,
@@ -25,7 +25,7 @@ const OrderItem = [
         oldPrice: "₹2999",
         discount: "50%",
         image: require("../../assets/image/Product1.png"),
-        date : "Bought on April 25, 2022",
+        date: "Bought on April 25, 2022",
     },
     {
         id: 3,
@@ -35,14 +35,14 @@ const OrderItem = [
         oldPrice: "₹2999",
         discount: "50%",
         image: require("../../assets/image/Product1.png"),
-        date : "Bought on April 25, 2022",
+        date: "Bought on April 25, 2022",
     },
 ]
 
 const Orders = (props) => {
 
-    const OnArrowPress  = (item) => {
-        props.navigation.navigate("OrderProgress" , { order : item } )
+    const OnArrowPress = (item) => {
+        props.navigation.navigate("OrderProgress", { order: item })
     }
     return (
         <View style={styles.container}>
@@ -50,7 +50,7 @@ const Orders = (props) => {
             <HeaderComponent
                 headerText={"Hey Sherya"}
                 basketItemExist={true}
-                OnDrawerPress = {() => {props.navigation.openDrawer()}}
+                OnDrawerPress={() => { props.navigation.openDrawer() }}
             />
 
             <TitleTextCompnent
@@ -60,18 +60,18 @@ const Orders = (props) => {
 
             <View style={styles.subTitleMainContainer}>
                 <Text style={styles.subtitleFontStyle}>
-                    Total savings   
+                    Total savings
                 </Text>
                 <Text style={styles.subtitlePriceFontStyle}>
                     {" "}  ₹4500
                 </Text>
             </View>
 
-            <ProductRenderComponent 
-            data={OrderItem}
-            containerStyle = {{marginTop : hp("3%")}}
-            comeFromOrders = {true}
-            OnArrowPress = {OnArrowPress}
+            <ProductRenderComponent
+                data={OrderItem}
+                containerStyle={{ marginTop: hp("3%") }}
+                comeFromOrders={true}
+                OnArrowPress={OnArrowPress}
             />
         </View>
     )

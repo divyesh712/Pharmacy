@@ -6,8 +6,8 @@ import {
     VIEW_BY_CATEGORIES,
     MEDICINE_CATEGORY_VIEW_ALL,
     VIEW_BY_PRODUCT,
-    VIEW_ALL_MEDICINE,
-    VIEW_BY_CATEGORY,
+    VIEW_ALL_MEDICINE_PRODUCT,
+    VIEW_BY_MEDICINE_ID,
     PRODUCT_VIEW_BY_MEDICINEID,
     PRODUCT_VIEW_ALL_MEDICINE,
     GET_ALTERNATEMEDICINE,
@@ -19,7 +19,13 @@ import {
     STORE_LOCATION_VIEW_ALL,
     USER_ADDRESS_DELETE,
     USER_VIEW_BY_ID,
-    PINCODE
+    PINCODE,
+    VIEW_ALL_MEDICINE,
+    CALLREQUEST,
+    USER_PRESCRIPTION_UPLOAD,
+    UPDATE_USERNAME,
+    CLICKHERE_OFFER,
+    CONTACT_US
 
 } from "../Api/apiconstants";
 
@@ -68,8 +74,6 @@ const authservices = {
                 'Content-Type': `application/json`,
             },
         };
-        console.log(VIEW_BY_CATEGORIES)
-        console.log(bodyFormData)
         const data = await axios.post(`${VIEW_BY_CATEGORIES}`, bodyFormData, config);
         return data;
     },
@@ -98,16 +102,18 @@ const authservices = {
                 'Content-Type': `application/json`,
             },
         };
-        const data = await axios.post(`${VIEW_ALL_MEDICINE}`, bodyFormData, config);
+        const data = await axios.post(`${VIEW_ALL_MEDICINE_PRODUCT}`, bodyFormData, config);
         return data;
     },
-    View_By_Categorie: async (bodyFormData) => {
+    View_By_Medicine_id: async (bodyFormData) => {
         const config = {
             headers: {
                 'Content-Type': `application/json`,
             },
         };
-        const data = await axios.post(`${VIEW_BY_CATEGORY}`, bodyFormData, config);
+        console.log(VIEW_BY_MEDICINE_ID)
+        console.log(bodyFormData)
+        const data = await axios.post(`${VIEW_BY_MEDICINE_ID}`, bodyFormData, config);
         return data;
     },
     Product_View_By_Medicine: async (bodyFormData) => {
@@ -190,8 +196,7 @@ const authservices = {
                 'Content-Type': `application/json`,
             },
         };
-        console.log(PRESCERIPTION_UPLOAD)
-        console.log(bodyFormData)
+
         const data = await axios.post(`${PRESCERIPTION_UPLOAD}`, bodyFormData, config);
         return data;
     },
@@ -201,7 +206,6 @@ const authservices = {
                 'Content-Type': `application/json`,
             },
         };
-        console.log(STORE_LOCATION_VIEW_ALL)
         const data = await axios.post(`${STORE_LOCATION_VIEW_ALL}`, bodyFormData, config);
         return data;
     },
@@ -211,8 +215,8 @@ const authservices = {
                 'Content-Type': `application/json`,
             },
         };
-        console.log(USER_ADDRESS_DELETE)
-        console.log(bodyFormData)
+        console.log('ADDRESSS ',bodyFormData)
+        console.log('ADDRESSSDATA HERE ',USER_ADDRESS_DELETE)
         const data = await axios.post(`${USER_ADDRESS_DELETE}`, bodyFormData, config);
         return data;
     },
@@ -222,8 +226,6 @@ const authservices = {
                 'Content-Type': `application/json`,
             },
         };
-        console.log(USER_VIEW_BY_ID)
-        console.log(bodyFormData)
         const data = await axios.post(`${USER_VIEW_BY_ID}`, bodyFormData, config);
         return data;
     },
@@ -233,12 +235,66 @@ const authservices = {
                 'Content-Type': `application/json`,
             },
         };
-        console.log(PINCODE)
         const data = await axios.post(`${PINCODE}`, bodyFormData, config);
         return data;
     },
-
-
+   All_Medicine: async (bodyFormData) => {
+        const config = {
+            headers: {
+                'Content-Type': `application/json`,
+            },
+        };
+        console.log(VIEW_ALL_MEDICINE)
+        const data = await axios.post(`${VIEW_ALL_MEDICINE}`, bodyFormData, config);
+        return data;
+    },
+    Call_Request: async (bodyFormData) => {
+        const config = {
+            headers: {
+                'Content-Type': `application/json`,
+            },
+        };
+        const data = await axios.post(`${CALLREQUEST}`, bodyFormData, config);
+        return data;
+    },
+   User_Prescription_upload: async (bodyFormData) => {
+        const config = {
+            headers: {
+                'Content-Type': `application/json`,
+            },
+        };
+        const data = await axios.post(`${USER_PRESCRIPTION_UPLOAD}`, bodyFormData, config);
+        return data;
+    },
+    Update_user_Name: async (bodyFormData) => {
+        const config = {
+            headers: {
+                'Content-Type': `application/json`,
+            },
+        };
+        console.log('name here ',UPDATE_USERNAME)
+        console.log('name url here',bodyFormData)
+        const data = await axios.post(`${UPDATE_USERNAME}`, bodyFormData, config);
+        return data;
+    },
+    Click_Here_Offer: async (bodyFormData) => {
+        const config = {
+            headers: {
+                'Content-Type': `application/json`,
+            },
+        };
+        const data = await axios.post(`${CLICKHERE_OFFER}`, bodyFormData, config);
+        return data;
+    },
+    Contact_Us: async (bodyFormData) => {
+        const config = {
+            headers: {
+                'Content-Type': `application/json`,
+            },
+        };
+        const data = await axios.post(`${CONTACT_US}`, bodyFormData, config);
+        return data;
+    },
 
 }
 export default authservices;

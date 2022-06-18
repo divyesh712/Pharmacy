@@ -67,12 +67,10 @@ const Login = (props) => {
 
     const CheckApiDireaction = () => {
         if (page == 0) {
-            GetOtp();
-            
+            GetOtpApi();
         }
         if (page == 1) {
-            VerifyOtpAPi();
-
+            VerifyOtpApi();
         }
     }
 
@@ -81,43 +79,6 @@ const Login = (props) => {
             setPage(2)
         }
     }
-
-    const VerifyOtpAPi = async () => {
-
-        let Apidata = {};
-        const isConnected = await NetworkCheck.isNetworkAvailable()
-
-        if (isConnected) {
-            Apidata = {
-                // "mobile": text1.concat(phonenumber),
-                "mobile": "91" + phonenumber,
-                "otp": Otp,
-            }
-            try {
-
-                const { data } = await AuthServices.VerifyOtp(Apidata)
-
-                if (data.status !== 200) {
-                    Setisapp_loding(false)
-                }
-                if (data.status == 200) {
-                    var value = JSON.stringify(data);
-                    await AsyncStorage.setItem('User', JSON.stringify(data) )
-                        .then(props.navigation.popToTop(),
-                            props.navigation.navigate('DrawerScreen'));
-                    Setisapp_loding(false)
-                }
-            }
-            catch (error) {
-                Setisapp_loding(false);
-                console.log(error)
-            }
-        }
-        else {
-            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
-        }
-    }
-
     return (
         <View style={styles.container}>
             <KeyboardAwareScrollView showsVerticalScrollIndicator={false} extraHeight={hp('13%')} enableOnAndroid>
@@ -149,6 +110,7 @@ const Login = (props) => {
                                 Otp={Otp}
                                 setOtp={setOtp}
                             />
+
                     }
 
                     <TouchableOpacity onPress={CheckApiDireaction} style={styles.BtnMainContainer}>

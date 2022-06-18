@@ -1,14 +1,19 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, Text, Modal, Image, TextInput, FlatList, TouchableOpacity, Dimensions, Platform } from 'react-native';
+import { View, Text, Modal, Image, TextInput, FlatList, TouchableOpacity, Dimensions, Platform, ActivityIndicator } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from './styles';
 import MyStatusBar from '../../components/Statusbar';
-import { HeaderComponent, SearchComponent, UploadPrecriptionModal, TalkToPharmasiticModal, CategoriesComponents, ChangeNameComponent, EnterNameComponent } from '../../components/sharedComponents';
+import { HeaderComponent, SearchComponent, UploadPrecriptionModal, TalkToPharmasiticModal, CategoriesComponents, EnterNameComponent } from '../../components/sharedComponents';
 import { color } from '../../utils/color';
 import ProductRenderComponent from '../../components/ProductRenderCompopnent';
 import { Category1, Category2, Category3, Category4, Category5, Category6 } from '../../constants/Imgconstants';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as ImagePicker from 'expo-image-picker';
+import { useDispatch, useSelector } from 'react-redux';
+import { Call_Request_Api } from '../../redux/action';
+import { useIsFocused } from "@react-navigation/native";
+import NetworkCheck from '../../utils/networkcheck';
+import MYDROP from '../../utils/Dropdown';
 
 const ProductIrems = [
     {
@@ -55,9 +60,11 @@ const Home = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [uploadPresModal, setUploadPresModal] = useState(false);
     const [talkPharModal, setTalkPharModal] = useState(false);
-    const [pharmNumber, setPharmNumber] = useState("+91  ");
+    const [pharmNumber, setPharmNumber] = useState('+91');
     const [EnterNameModel, setEnterNameModel] = useState(false);
     const [image, setImage] = useState({});
+    const [mobile, setmobile] = useState('');
+
 
     const OnDrawerPress = () => {
         props.navigation.openDrawer()
@@ -116,26 +123,50 @@ const Home = (props) => {
     const CameraOpen = async () => {
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchCameraAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          aspect: [2,2],
-          quality: 1,
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [2, 2],
+            quality: 1,
         });
-    
-        console.log('uri result here ',result);
-    
+
+        console.log('uri result here ', result);
+
         if (!result.cancelled) {
             setImage(result.uri);
-          setUploadPresModal(false);
-       
+            setUploadPresModal(false);
+
         }
-      };
-      useEffect(() => {
-        if(image){
-        //   Prescription_Uploaded();
+    };
+    useEffect(() => {
+        if (image) {
+            //   Prescription_Uploaded();
         }
         // console.log("URL IS=====>", image)
     }, [image])
+
+    const dispatch = useDispatch();
+    const state = useSelector(state => state.userReducers);
+    const loading = useSelector(state => state.userReducers.loading)
+
+    const Call_Request_Api_Function = async () => {
+        const isConnected = await NetworkCheck.isNetworkAvailable()
+
+        if (isConnected) {
+            let data = { user_Id: 1, mobile: pharmNumber }
+            dispatch(Call_Request_Api(data, res => {
+                if (res.status == 200) {
+                    setPharmNumber(res.data)
+                    setTalkPharModal(false)
+
+                }
+
+            }))
+
+        }
+        else {
+            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+        }
+    }
 
 
     return (
@@ -172,6 +203,7 @@ const Home = (props) => {
                         categoryName={"Talk to Pharmasitic"}
                         categoryImg={Category2}
                         OnCategoryPress={OnTalkPharmasticPress}
+
                     />
 
                     <CategoriesComponents
@@ -219,6 +251,7 @@ const Home = (props) => {
                     pickImage={pickImage}
                     CameraOpen={CameraOpen}
 
+
                 />
 
                 <TalkToPharmasiticModal
@@ -226,6 +259,7 @@ const Home = (props) => {
                     talkPharModal={talkPharModal}
                     setPharmNumber={setPharmNumber}
                     pharmNumber={pharmNumber}
+                    Call_Request_Api_Function={Call_Request_Api_Function}
                 />
 
                 <EnterNameComponent
@@ -235,6 +269,12 @@ const Home = (props) => {
                 />
 
             </ScrollView>
+            {
+                loading &&
+                <View style={styles.loadingStyle}>
+                    <ActivityIndicator size="large" color='#000000' />
+                </View>
+            }
         </View>
     )
 }

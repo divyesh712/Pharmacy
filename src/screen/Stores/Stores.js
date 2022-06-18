@@ -58,7 +58,6 @@ const Stores = (props) => {
             MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
         }
     }
-    
 
     const StoresRenderItem = (item) => {
         return(

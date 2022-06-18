@@ -102,6 +102,7 @@ const OrderProgress = (props) => {
                 containerStyle = {{
                     marginTop : hp("3%")
                 }}
+                OnBtnPress = {() => {props.navigation.navigate('Bag')}}
             />
         </View>
     )

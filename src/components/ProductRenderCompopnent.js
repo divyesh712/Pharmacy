@@ -27,10 +27,10 @@ const ProductRenderComponent = ({
 
         let ImageUrl;
 
-        if (item.media) {
-            let ImgObj = JSON.parse(item.media)
+        if (item.prescription_media) {
+            let ImgObj = JSON.parse(item.prescription_media)
             ImageUrl = ImgObj[0].path
-            console.log("==========MEDIA IS=======>", ImageUrl)
+            // console.log("==========MEDIA IS=======>", ImageUrl)
         }
 
 
@@ -69,7 +69,7 @@ const ProductRenderComponent = ({
                             </View>
                             <View style={styles.ProductPriceContainer}>
                                 <Text style={styles.DiscountFontStyle}>
-                                    {item.discount} off
+                                    50% off
                                 </Text>
                             </View>
                         </View>
@@ -306,6 +306,7 @@ const styles = StyleSheet.create({
         height: hp("3%"),
         width: hp("3%"),
     },
+
 })
 
 export default ProductRenderComponent;

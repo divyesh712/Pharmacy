@@ -1,4 +1,4 @@
-import React, { useRef, useState,useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, Image, FlatList, } from 'react-native';
 import styles from './styles';
 import MyStatusBar from '../../components/Statusbar';
@@ -12,6 +12,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import AuthServices from '../../Api/authservices';
 import NetworkCheck from '../../utils/networkcheck';
 import MYDROP from '../../utils/Dropdown';
+import { useDispatch, useSelector } from 'react-redux';
+import { pincodeApi,User_address_delete_Api,User_View_By_Id } from '../../redux/action';
+import { useIsFocused } from "@react-navigation/native";
 
 const AddressItems = [
     {
@@ -28,141 +31,102 @@ const AddressItems = [
 const Address = (props) => {
 
     const [page, setPage] = useState(0);
-    const [Hnumber , setHnumber ] =useState("");
-    const [ address ,  setAddress ] = useState("");
-    const [ landMark , setLandMark ] = useState("");
-    const [ city , setCity ] = useState("");
-    const [postalCode , setPostalCode ] = useState("");
-    const [address_Id , setaddress_Id ] = useState("");
+    const [Hnumber, setHnumber] = useState("");
+    const [address, setAddress] = useState("");
+    const [landMark, setLandMark] = useState("");
+    const [city, setCity] = useState("");
+    const [postalCode, setPostalCode] = useState("");
+    const [address_Id, setaddress_Id] = useState("");
     const [isAppLoading, Setisapp_loding] = useState(false);
-    const [View_userId , setView_userId ] = useState([]);
+    const [View_userId, setView_userId] = useState([]);
+    const [RemoveAddress, setRemoveAddress] = useState("");
+    
 
+    const dispatch = useDispatch();
+    const state = useSelector(state => state.userReducers);
+    const loading = useSelector(state => state.userReducers.loading)
 
     const OnAddAddressPress = () => {
         setPage(page + 1);
     }
     useEffect(() => {
         VIew_By_USERID()
-        if(page == 1){
-            PincodeApi();
+        if (page == 1) {
+            PincodeApiFunction();
         }
     }, [])
-    useEffect(() => {
-        console.log('View USer ID HEre =============> ',View_userId)
-    },[View_userId])
     
-    const Remove_Address = async () => {
-        let Apidata = {};
-
+    const UserAddressdelete = async (item) => {
         const isConnected = await NetworkCheck.isNetworkAvailable()
 
         if (isConnected) {
-            Apidata = {
-                "address_Id": '1'
-            }
-
-            try {
-
-                const { data } = await AuthServices.User_address_delete(Apidata)
-
-                if (data.status !== 200) {
-                    Setisapp_loding(false)
-                }
-                if (data.status == 200) {
-                    Setisapp_loding(false);
+            let data = {address_Id:item.address_Id}
+            dispatch(User_address_delete_Api(data, res => {
+                if (res.status == 200) {
+                    setRemoveAddress(res.data);
 
                 }
-            }
-            catch (error) {
 
-                Setisapp_loding(false);
-                console.log(error)
-            }
+            }))
+
         }
         else {
-            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+            MYDROP.alert('error', 'No Internet Connection', "Please Check Your Device Connection");
         }
     }
+
     const VIew_By_USERID = async () => {
-
-        let Apidata = {};
-
         const isConnected = await NetworkCheck.isNetworkAvailable()
 
         if (isConnected) {
-            
-            Apidata = {
-                "user_Id":'2'
-            }
-
-            try {
-
-                const { data } = await AuthServices.View_By_userID(Apidata)
-               
-                if (data.status !== 200) {
-                    Setisapp_loding(false)
-                }
-                if (data.status == 200) {
-                    Setisapp_loding(false);
-                    setView_userId(data.data)
+            let data = {user_Id:'1'}
+            dispatch(User_View_By_Id(data, res => {
+                if (res.status == 200) {
+                    setView_userId(res.data);
 
                 }
-            }
-            catch (error) {
 
-                Setisapp_loding(false);
-                console.log(error)
-            }
+            }))
+
         }
         else {
-            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+            MYDROP.alert('error', 'No Internet Connection', "Please Check Your Device Connection");
         }
     }
 
-    
-    const PincodeApi = async (uri) => {
-
+    const PincodeApiFunction = async () => {
         const isConnected = await NetworkCheck.isNetworkAvailable()
 
         if (isConnected) {
+            let data = {}
+            dispatch(pincodeApi(data, res => {
+                if (res.status == 200) {
+                    setPostalCode(res.data[0]);
 
-            try {
-             
-                const { data } = await AuthServices.Pincode()
-                console.log("DATA IS====>", data)
-                if (data.status !== 200) {
-                    Setisapp_loding(false)
                 }
-                if (data.status == 200) {
-                    Setisapp_loding(false);
-                    setPostalCode(data.data[0].pincode);
-                }
-            }
-            catch (error) {
 
-                Setisapp_loding(false);
-                console.log(error)
-            }
+            }))
+
         }
         else {
-            MYDROP.alert('error', 'No Internet Connection', "please check your device connection");
+            MYDROP.alert('error', 'No Internet Connection', "Please Check Your Device Connection");
         }
     }
+
 
     const AddressRenderItem = (item) => {
-        console.log('$$$$$$$$$$$$$',item)
         return (
             <View style={styles.AddressMainContainer}>
                 <View style={styles.AddressTextMainContainer}>
                     <Text style={styles.AddressMainFontStyle}>
-                    Nithya Deshpande
+                        Nithya Deshpande
                     </Text>
                     <Text style={styles.AddressFontStyle}>
                         {item.address}
                     </Text>
                 </View>
                 <View style={styles.AddressBottomMainContainer}>
-                    <TouchableOpacity onPress={Remove_Address} style={styles.AddressRemoveMainContainer}>
+                    <TouchableOpacity onPress={() =>UserAddressdelete(item)} style={styles.AddressRemoveMainContainer}>
                         <Image
                             source={RemoveIcon}
                             style={styles.removeIconStyle}
@@ -199,18 +163,18 @@ const Address = (props) => {
             {
                 page == 1 ?
                     <AddAddress
-                    page = {page}
-                    setPage = {setPage}
-                    Hnumber = {Hnumber}
-                    setHnumber = {setHnumber}
-                    address = {address}
-                    setAddress = {setAddress}
-                    landMark = {landMark}
-                    setLandMark = {setLandMark}
-                    city = {city}
-                    setCity = {setCity}
-                    postalCode = {postalCode}
-                    setPostalCode = {setPostalCode}
+                        page={page}
+                        setPage={setPage}
+                        Hnumber={Hnumber}
+                        setHnumber={setHnumber}
+                        address={address}
+                        setAddress={setAddress}
+                        landMark={landMark}
+                        setLandMark={setLandMark}
+                        city={city}
+                        setCity={setCity}
+                        postalCode={postalCode}
+                        setPostalCode={setPostalCode}
                     />
                     :
                     <View>
