@@ -203,7 +203,6 @@ const Home = (props) => {
                         categoryName={"Talk to Pharmasitic"}
                         categoryImg={Category2}
                         OnCategoryPress={OnTalkPharmasticPress}
-
                     />
 
                     <CategoriesComponents
@@ -250,6 +249,7 @@ const Home = (props) => {
                     uploadPresModal={uploadPresModal}
                     pickImage={pickImage}
                     CameraOpen={CameraOpen}
+                 
 
 
                 />

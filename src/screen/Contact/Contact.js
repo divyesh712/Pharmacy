@@ -36,7 +36,6 @@ const Contact = (props) => {
         }
     }
 
-
     return (
         <View style={styles.container}>
             <MyStatusBar />
