@@ -15,4 +15,8 @@ export const color = {
     ModalBgColor : "#FDFAF6",
     secondMainFont : "#202121",
     orangeColor : "#F8A800",
+    dotColor : "#C4C4C4",
+    countBgColor : "rgba(255, 255, 255, 0.2)",
+    redColor : "#FF3A44",
+    catBorderColor : "#ECECEC"
 }

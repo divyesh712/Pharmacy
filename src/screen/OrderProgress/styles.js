@@ -56,7 +56,9 @@ export default StyleSheet.create({
     ordertTextStyle : {
         fontFamily : fontFamily.BOLD_FONT_FAMILY,
         fontSize : fontSize.msmall,
+        textDecorationLine : "line-through",
     },
+
     OrderDateMainContainer : {
         height : hp("6%"),
         width :wp("86%"),

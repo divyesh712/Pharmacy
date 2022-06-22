@@ -162,6 +162,7 @@ const styles = StyleSheet.create({
         fontSize: fontSize.lsmall,
         fontFamily: fontFamily.REGULAR_FORT_FAMILY,
         color: color.secondfont,
+        textDecorationLine : "line-through",
     },
     DiscountFontStyle: {
         fontSize: fontSize.lsmall,

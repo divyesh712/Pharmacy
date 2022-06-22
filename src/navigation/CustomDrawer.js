@@ -1,13 +1,22 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity, } from 'react-native';
+import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity,ActivityIndicator } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { color } from '../utils/color';
 import fontSize from '../utils/fontsize';
 import fontFamily from '../utils/fontFamily';
 import { RemoveIcon, EditIcon } from '../constants/Imgconstants';
+import { useDispatch, useSelector } from 'react-redux';
 
 const CustomDrawer = (props) => {
+
+    const dispatch = useDispatch();
+    const state = useSelector(state => state.userReducers);
+    const loading = useSelector(state => state.userReducers.loading);
+    const updateUserName = useSelector(state => state.userReducers.updateUserName);
+    const [Name, SetName] = useState(updateUserName.name);
+    const [Number, SetNumber] = useState(updateUserName.mobile);
+
     return (
         <View style={styles.container} >
             <DrawerContentScrollView
@@ -15,31 +24,32 @@ const CustomDrawer = (props) => {
                 {...props}
             >
                 <View style={styles.DrawerIconMainContainer}>
-                    <TouchableOpacity onPress={() => {props.navigation.closeDrawer() }} style={styles.DrawerIconContainer}>
-                    <Image
-                        source={RemoveIcon}
-                        style={styles.DrawerIconStyle}
-                    />
+                    <TouchableOpacity onPress={() => { props.navigation.closeDrawer() }} style={styles.DrawerIconContainer}>
+                        <Image
+                            source={RemoveIcon}
+                            style={styles.DrawerIconStyle}
+                        />
                     </TouchableOpacity>
                 </View>
 
                 <View style={styles.UserNameMainContainer}>
                     <Text style={styles.UserNameTextStyle}>
-                        Hey Sherya
+                      Hey Shreya
                     </Text>
                 </View>
                 <View style={styles.userPhoneNumMainContainer}>
                     <View style={styles.UserPhoneNumContainer}>
                         <Text style={styles.UserPhoneStyle}>
-                            +91 9873456788
+                           +919687119033
                         </Text>
                     </View>
-                    <View style={styles.EditIconMainContainer}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate('ChangeName') }} style={styles.EditIconMainContainer}>
                         <Image
                             source={EditIcon}
                             style={styles.editIconStyle}
+
                         />
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.LineMainContainer}>
                 </View>
@@ -57,17 +67,23 @@ const CustomDrawer = (props) => {
                 />
                 <View style={styles.BottomMainContainer}>
                     <View style={styles.BottomTextContainer}>
-                        <Text style = {styles.BottomTextStyle}>
+                        <Text style={styles.BottomTextStyle}>
                             Terms and Conditions
                         </Text>
                     </View>
                     <View style={styles.BottomTextContainer}>
-                        <Text style = {styles.BottomTextStyle}>
+                        <Text style={styles.BottomTextStyle}>
                             Privacy Policy
                         </Text>
                     </View>
                 </View>
             </DrawerContentScrollView>
+            {
+                loading &&
+                <View style={styles.loadingStyle}>
+                    <ActivityIndicator size="large" color='#000000' />
+                </View>
+            }
         </View>
     )
 }
@@ -137,27 +153,27 @@ const styles = StyleSheet.create({
         fontSize: fontSize.slarge,
         color: color.mainfont,
         marginLeft: wp("4%"),
-        marginVertical : hp("2%")
+        marginVertical: hp("2%")
     },
-    BottomMainContainer : {
-        height : hp("10%"),
-        width : wp("82%"),
-        alignSelf : 'center',
+    BottomMainContainer: {
+        height: hp("10%"),
+        width: wp("82%"),
+        alignSelf: 'center',
     },
-    BottomTextContainer : {
-        height : hp("5%"),
-        width : wp("80%"),
-        justifyContent : 'center'
+    BottomTextContainer: {
+        height: hp("5%"),
+        width: wp("80%"),
+        justifyContent: 'center'
     },
-    BottomTextStyle : {
-        fontFamily : fontFamily.REGULAR_FORT_FAMILY,
-        fontSize : fontSize.regular,
-        color : color.mainfont
+    BottomTextStyle: {
+        fontFamily: fontFamily.REGULAR_FORT_FAMILY,
+        fontSize: fontSize.regular,
+        color: color.mainfont
     },
-    DrawerIconContainer : {
-        height : hp("4%"),
-        width  :wp("8%"),
-        justifyContent : 'center'
+    DrawerIconContainer: {
+        height: hp("4%"),
+        width: wp("8%"),
+        justifyContent: 'center'
     }
 
 })

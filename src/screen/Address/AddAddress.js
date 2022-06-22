@@ -1,8 +1,11 @@
-import React from 'react';
+import React ,{useEffect,useState} from 'react';
 import { View } from 'react-native';
 import { AddAddressTextInput } from '../../components/sharedComponents';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { CustomBtn } from '../../components/CustomBtn';
+import AuthServices from '../../Api/authservices';
+import NetworkCheck from '../../utils/networkcheck';
+import MYDROP from '../../utils/Dropdown';
 
 const AddAddress = ({
     page,
@@ -18,6 +21,8 @@ const AddAddress = ({
     postalCode,
     setPostalCode,
 }) => {
+    const [isAppLoading, Setisapp_loding] = useState(false);
+
     return (
         <View>
             <AddAddressTextInput

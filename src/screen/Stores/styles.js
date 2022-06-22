@@ -10,15 +10,19 @@ export default StyleSheet.create({
         backgroundColor: color.bg_main
     },
     StoresMAinContainer : {
-        height : hp("20%"),
-        width : wp("86%"),
+        height : hp("21%"),
+        width : wp("86.3%"),
         alignSelf : 'center',
         marginTop : hp("3.5%"),
         borderBottomColor : color.lineColor,
-        borderBottomWidth : hp("0.2%")
+        borderBottomWidth : hp("0.2%"),
     },
     StoresContainer : {
-        height : hp("14%"),
+        height : hp("13.2%"),
+        width : wp("70%"),
+    },
+    StoresContainer1 : {
+        height : hp("3.8%"),
         width : wp("70%"),
     },
     StoreTextStyle : {
@@ -28,10 +32,12 @@ export default StyleSheet.create({
         lineHeight : hp("3.5%")
     },
     StoreIconMainContainer : {
-        height : hp("6%"),
-        width : wp("86%"),
+        height : hp("4%"),
+        width : wp("88%"),
         justifyContent:'center',
-        alignItems : 'flex-end'
+        alignItems : 'flex-end',
+
+        
     },
     StoreIconContainer : {
         height : hp("6%"),
@@ -40,5 +46,15 @@ export default StyleSheet.create({
     StoreIconStyle : {
         height : hp("5%"),
         width : hp("5%")
-    }
+    },
+    loadingStyle: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        left: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: "rgba(0, 0, 0, 0.3)"
+    },
 })

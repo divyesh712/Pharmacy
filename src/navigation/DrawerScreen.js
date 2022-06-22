@@ -8,7 +8,6 @@ import OrderStack from './OrderStack';
 import Address from '../screen/Address/Address';
 import PrescriptionStack from './PrescriptionStack';
 import Contact from '../screen/Contact/Contact';
-
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { ChevronRight } from '../constants/Imgconstants';
 import { color } from '../utils/color';
