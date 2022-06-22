@@ -13,7 +13,6 @@ export default StyleSheet.create({
     flatlistcontainer: {
         height: hp('65%'),
         width: wp('100%'),
-        backgroundColor: 'red',
     },
     SecondMainContainer : {
         height : hp("35%"),

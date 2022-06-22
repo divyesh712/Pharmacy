@@ -8,11 +8,13 @@ import fontFamily from '../utils/fontFamily';
 
 export const CustomBtn = ({
     containerStyle,
-    btnText
+    btnText,
+    TextStyle,
+    OnBtnPress,
 }) => {
     return (
-        <TouchableOpacity style={{...styles.BtnMainContainer , ...containerStyle}}>
-            <Text style={styles.BtnTextStyle}>
+        <TouchableOpacity onPress={OnBtnPress} style={{...styles.BtnMainContainer , ...containerStyle}}>
+            <Text style={{...styles.BtnTextStyle , ...TextStyle}}>
                 {btnText}
             </Text>
         </TouchableOpacity>
